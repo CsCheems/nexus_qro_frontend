@@ -1,0 +1,285 @@
+.section {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* ================= Background ================= */
+
+.bg {
+  position: absolute;
+  inset: 0;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(37, 98, 234, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 98, 234, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.gradTopRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle at top right, rgba(37, 98, 234, 0.12), transparent 60%);
+  filter: blur(60px);
+}
+
+.gradBottomLeft {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle at bottom left, rgba(66, 55, 199, 0.12), transparent 60%);
+  filter: blur(60px);
+}
+
+.network {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.line {
+  stroke: rgba(37, 98, 234, 0.2);
+  stroke-width: 1;
+}
+
+/* ================= Content ================= */
+
+.contentWrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8rem 1.5rem;
+}
+
+.content {
+  max-width: 64rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ================= Badge ================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  background: rgba(37, 98, 234, 0.1);
+  border: 1px solid rgba(37, 98, 234, 0.2);
+  border-radius: 999px;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.badge:hover {
+  background: rgba(37, 98, 234, 0.15);
+}
+
+.badgeIcon {
+  width: 16px;
+  height: 16px;
+  color: #2562ea; /* Lucide usa currentColor */
+}
+
+.badgeText {
+  color: #2562ea;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ================= Title ================= */
+
+.title {
+  font-weight: 800;
+  color: #2e2e2e;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+}
+
+.titleGradient {
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ================= Subtitle ================= */
+
+.subtitle {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: #8892b0;
+  line-height: 1.7;
+  max-width: 48rem;
+  margin: 0 auto 3rem;
+}
+
+/* ================= Buttons ================= */
+
+.ctaRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.primaryBtn {
+  width: 100%;
+  max-width: 360px;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease,
+              background 0.3s ease;
+}
+
+.primaryBtn:hover {
+  box-shadow: 0 14px 24px rgba(37, 98, 234, 0.25);
+  transform: translateY(-2px);
+}
+
+.primaryBtnIcon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* Micro animación del icono */
+.primaryBtn:hover .primaryBtnIcon {
+  transform: translateX(4px);
+}
+
+.secondaryBtn {
+  width: 100%;
+  max-width: 360px;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: #ffffff;
+  border: 2px solid #d1d5db;
+  color: #2e2e2e;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  transition: background 0.2s ease,
+              border-color 0.2s ease,
+              transform 0.2s ease;
+}
+
+.secondaryBtn:hover {
+  background: #f9fafb;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+/* ================= Stats ================= */
+
+.stats {
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat {
+  text-align: center;
+  padding: 0.25rem 0;
+}
+
+.statNumber {
+  font-size: 1.875rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #8892b0;
+}
+
+.statMiddle {
+  border-left: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+/* ================= Bottom Fade ================= */
+
+.bottomFade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 128px;
+  background: linear-gradient(to top, #ffffff, transparent);
+}
+
+/* ================= Responsive ================= */
+
+@media (min-width: 640px) {
+  .ctaRow {
+    flex-direction: row;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .statMiddle {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 0;
+  }
+}

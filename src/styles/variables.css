@@ -1,0 +1,10 @@
+:root {
+  --color-primary: #FFFFFF;
+  --color-gradient1: #2562EA;
+  --color-gradient2: #4237C7;
+  --color-text: #2e2e2e;
+  --color-muted: #8892B0;
+
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}

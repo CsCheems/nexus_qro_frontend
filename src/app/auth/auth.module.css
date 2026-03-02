@@ -1,0 +1,214 @@
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #8892B0;
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  transition: 0.3s;
+}
+
+.backLink:hover {
+  color: #2562EA;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.logoBox {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #2562EA, #4237C7);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 10px 25px rgba(37, 98, 234, 0.3);
+}
+
+.logoTitle{
+  color: #2e2e2e;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.logoSubtitle{
+  color: #2562EA;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2e2e2e;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #8892B0;
+  font-size: 0.95rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #2e2e2e;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 3rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2562EA;
+  box-shadow: 0 0 0 3px rgba(37, 98, 234, 0.2);
+}
+
+.iconLeft {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8892B0;
+}
+
+.iconRight {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #8892B0;
+  transition: 0.3s;
+}
+
+.iconRight:hover {
+  color: #2562EA;
+}
+
+.buttonPrimary {
+  padding: 0.9rem;
+  background: linear-gradient(to right, #2562EA, #4237C7);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.buttonPrimary:hover {
+  box-shadow: 0 12px 25px rgba(37, 98, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Overlay Panel */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  width: 50%;
+  background: linear-gradient(135deg, #2562EA, #4237C7);
+  z-index: 20;
+  transition: 0.7s ease-in-out;
+  overflow: hidden;
+}
+
+.overlayLeft {
+  left: 0;
+}
+
+.overlayRight {
+  left: 50%;
+}
+
+.overlayContent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: white;
+  text-align: center;
+}
+
+.overlayTitle {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.overlayText {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.overlayButton {
+  padding: 0.9rem 2rem;
+  background: white;
+  color: #2562EA;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.overlayButton:hover {
+  background: #f3f4f6;
+}

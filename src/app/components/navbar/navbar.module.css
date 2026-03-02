@@ -1,0 +1,155 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.inner {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ================= Logo ================= */
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #2562ea, #4237c7);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(37, 98, 234, 0.25);
+}
+
+.logoIcon span {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logoTitle {
+  color: #2e2e2e;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.logoSubtitle {
+  color: #2562ea;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+/* ================= Desktop Nav ================= */
+
+.navDesktop {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navDesktop > a:not(.ctaButton) {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8892b0;
+  transition: color 0.3s ease;
+}
+
+.navDesktop a:hover:not(.ctaButton) {
+  color: #2562ea;
+}
+
+/* CTA Button */
+
+.ctaButton {
+  
+  padding: 10px 24px;
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.ctaButton:hover {
+  box-shadow: 0 3px 6px rgba(37, 98, 234, 0.3);
+}
+
+/* ================= Mobile ================= */
+
+.mobileButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2e2e2e;
+}
+
+.mobileButton:hover {
+  color: #2562ea;
+}
+
+.mobileMenu {
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 24px 0;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 2rem;
+}
+
+.mobileNav a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8892b0;
+}
+
+.mobileNav a:hover {
+  color: #2562ea;
+}
+
+/* ================= Responsive ================= */
+
+@media (max-width: 768px) {
+  .navDesktop {
+    display: none;
+  }
+
+  .mobileButton {
+    display: block;
+  }
+}
