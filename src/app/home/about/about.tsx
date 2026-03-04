@@ -15,7 +15,7 @@ export default function About() {
     <section id="nosotros" className={style.section}>
       <div className={style.container}>
         <div className={style.grid2}>
-          {/* Left */}
+
           <div>
             <div className={style.badge}>
               <span className={style.badgeText}>Sobre Nexus-Qro</span>
@@ -53,7 +53,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right */}
           <div className={style.rightWrap}>
                 <div className={style.card}>
                     <div className={style.imageGrid}>
@@ -88,7 +87,7 @@ export default function About() {
           </div>
         </div>
       </div>
-      {/* Decoration */}
+
       <div className={style.decoration} />
     </section>
   )

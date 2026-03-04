@@ -53,26 +53,23 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Grid */}
+
         <div className={style.grid}>
           {services.map((service, index) => {
             const Icon = service.icon;
 
             return (
               <div key={index} className={style.card}>
-                {/* Top hover bar */}
+
                 <div className={style.topBar} />
 
-                {/* Icon */}
                 <div className={style.iconBox}>
                   <Icon className={style.icon} />
                 </div>
 
-                {/* Content */}
                 <h3 className={style.cardTitle}>{service.title}</h3>
                 <p className={style.cardDesc}>{service.description}</p>
 
-                {/* Features */}
                 <ul className={style.features}>
                   {service.features.map((feature, idx) => (
                     <li key={idx} className={style.featureItem}>
@@ -86,14 +83,12 @@ export default function Services() {
           })}
         </div>
 
-        {/* CTA */}
         <div className={style.cta}>
           <p className={style.ctaText}>¿Necesita una solución personalizada?</p>
           <button className={style.ctaBtn}>Contactar con un experto</button>
         </div>
       </div>
 
-      {/* Decoration */}
       <div className={style.decoration} />
     </section>
   );

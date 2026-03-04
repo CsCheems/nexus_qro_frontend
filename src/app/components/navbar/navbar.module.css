@@ -29,8 +29,6 @@
   justify-content: space-between;
 }
 
-/* ================= Logo ================= */
-
 .logoContainer {
   display: flex;
   align-items: center;
@@ -65,8 +63,6 @@
   font-size: 12px;
   letter-spacing: 0.5px;
 }
-
-/* ================= Desktop Nav ================= */
 
 .navDesktop {
   display: flex;
@@ -105,8 +101,6 @@
   box-shadow: 0 3px 6px rgba(37, 98, 234, 0.3);
 }
 
-/* ================= Mobile ================= */
-
 .mobileButton {
   display: none;
   background: none;
@@ -141,8 +135,6 @@
 .mobileNav a:hover {
   color: #2562ea;
 }
-
-/* ================= Responsive ================= */
 
 @media (max-width: 768px) {
   .navDesktop {

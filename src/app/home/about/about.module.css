@@ -97,7 +97,6 @@
   font-size: 0.75rem;
 }
 
-/* Right side */
 .rightWrap {
   position: relative;
 }
@@ -169,8 +168,6 @@
     scale: 1;
   }
 }
-
-
 
 @media (min-width: 1024px) {
   .grid2 {

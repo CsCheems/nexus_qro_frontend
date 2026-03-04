@@ -43,11 +43,9 @@ export default function Hero() {
         </svg>
       </div>
 
-      {/* Content */}
       <div className={style.contentWrap}>
         <div className={style.content}>
-          
-          {/* Badge */}
+
           <div className={style.badge}>
             <Sparkles className={style.badgeIcon} />
             <span className={style.badgeText}>

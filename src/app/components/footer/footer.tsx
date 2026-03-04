@@ -36,7 +36,6 @@ export default function Footer() {
     <footer className={style.footer}>
       <div className={style.container}>
         <div className={style.grid}>
-          {/* Brand */}
           <div className={style.brandCol}>
             <div className={style.logoRow}>
               <div className={style.logoIcon}>
@@ -75,7 +74,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
           {Object.entries(navigation).map(([key, items]) => (
             <div key={key}>
               <h3 className={style.navTitle}>
@@ -92,7 +90,6 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom */}
         <div className={style.bottom}>
           <p className={style.copyright}>
             © {new Date().getFullYear()} Nexus-Qro. Todos los derechos reservados.

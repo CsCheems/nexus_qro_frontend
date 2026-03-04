@@ -8,8 +8,6 @@
   background: #ffffff;
 }
 
-/* ================= Background ================= */
-
 .bg {
   position: absolute;
   inset: 0;
@@ -57,8 +55,6 @@
   stroke-width: 1;
 }
 
-/* ================= Content ================= */
-
 .contentWrap {
   position: relative;
   z-index: 10;
@@ -73,8 +69,6 @@
   margin: 0 auto;
   text-align: center;
 }
-
-/* ================= Badge ================= */
 
 .badge {
   display: inline-flex;
@@ -95,7 +89,7 @@
 .badgeIcon {
   width: 16px;
   height: 16px;
-  color: #2562ea; /* Lucide usa currentColor */
+  color: #2562ea;
 }
 
 .badgeText {
@@ -103,8 +97,6 @@
   font-size: 0.875rem;
   font-weight: 600;
 }
-
-/* ================= Title ================= */
 
 .title {
   font-weight: 800;
@@ -121,8 +113,6 @@
   color: transparent;
 }
 
-/* ================= Subtitle ================= */
-
 .subtitle {
   font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   color: #8892b0;
@@ -130,8 +120,6 @@
   max-width: 48rem;
   margin: 0 auto 3rem;
 }
-
-/* ================= Buttons ================= */
 
 .ctaRow {
   display: flex;
@@ -176,7 +164,6 @@
   transition: transform 0.2s ease;
 }
 
-/* Micro animación del icono */
 .primaryBtn:hover .primaryBtnIcon {
   transform: translateX(4px);
 }
@@ -205,8 +192,6 @@
   border-color: #cbd5e1;
   transform: translateY(-1px);
 }
-
-/* ================= Stats ================= */
 
 .stats {
   margin-top: 5rem;
@@ -244,8 +229,6 @@
   border-right: 1px solid #e5e7eb;
 }
 
-/* ================= Bottom Fade ================= */
-
 .bottomFade {
   position: absolute;
   left: 0;
@@ -254,8 +237,6 @@
   height: 128px;
   background: linear-gradient(to top, #ffffff, transparent);
 }
-
-/* ================= Responsive ================= */
 
 @media (min-width: 640px) {
   .ctaRow {
