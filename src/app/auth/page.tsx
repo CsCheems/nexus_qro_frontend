@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey, Phone } from "lucide-react";
+import PhoneInput from 'react-phone-number-input'
+import type { E164Number } from "react-phone-number-input";
+import 'react-phone-number-input/style.css';
 import styles from "./auth.module.css";
 
 export default function Auth() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -18,9 +20,9 @@ export default function Auth() {
   const [registerLastName, setRegisterLastName] = useState("");
   const [registerSecondLastName, setRegisterSecondLastName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPhone, setRegisterPhone] = useState<string>("");
   const [registerRole, setRegisterRole] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -232,6 +234,24 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
+              <label htmlFor="register-phone" className={styles.label}>
+                Correo Electrónico
+              </label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.iconLeft}>
+                  <Phone size={20} />
+                </span>
+                <PhoneInput
+                  id="register-phone"
+                  value={registerPhone as E164Number | undefined}
+                  onChange={(value) => setRegisterPhone(value ?? "")}
+                  className={styles.input}
+                  defaultCountry="MX"
+                />
+              </div>
+            </div>
+
+            <div className={styles.field}>
               <label htmlFor="register-role" className={styles.label}>
                 Tipo de usuario
               </label>
@@ -279,35 +299,6 @@ export default function Auth() {
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="register-confirm-password" className={styles.label}>
-                Confirmar Contraseña
-              </label>
-              <div className={styles.inputWrapper}>
-                <span className={styles.iconLeft}>
-                  <Lock size={20} />
-                </span>
-                <input
-                  id="register-confirm-password"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={registerConfirmPassword}
-                  onChange={(e) => setRegisterConfirmPassword(e.target.value)}
-                  placeholder="Confirma tu contraseña"
-                  className={styles.input}
-                  required
-                  style={{ paddingRight: "3rem" }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword((v) => !v)}
-                  className={styles.iconRight}
-                  aria-label={showConfirmPassword ? "Ocultar confirmación" : "Mostrar confirmación"}
-                >
-                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
