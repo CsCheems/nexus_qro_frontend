@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, Building2 } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey } from "lucide-react";
 import styles from "./auth.module.css";
 
 export default function Auth() {
@@ -15,8 +15,10 @@ export default function Auth() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const [registerName, setRegisterName] = useState("");
+  const [registerLastName, setRegisterLastName] = useState("");
+  const [registerSecondLastName, setRegisterSecondLastName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
-  const [registerOrganization, setRegisterOrganization] = useState("");
+  const [registerRole, setRegisterRole] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -30,8 +32,10 @@ export default function Auth() {
     e.preventDefault();
     console.log("Register attempt:", {
       registerName,
+      registerLastName,
+      registerSecondLastName,
       registerEmail,
-      registerOrganization,
+      registerRole,
       registerPassword,
     });
   };
@@ -149,7 +153,7 @@ export default function Auth() {
             {/* Name */}
             <div className={styles.field}>
               <label htmlFor="register-name" className={styles.label}>
-                Nombre Completo
+                Nombre(s)
               </label>
               <div className={styles.inputWrapper}>
                 <span className={styles.iconLeft}>
@@ -160,7 +164,47 @@ export default function Auth() {
                   type="text"
                   value={registerName}
                   onChange={(e) => setRegisterName(e.target.value)}
-                  placeholder="Juan Pérez"
+                  placeholder="Juan"
+                  className={styles.input}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="register-lastName" className={styles.label}>
+                Apellido Paterno
+              </label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.iconLeft}>
+                  <User size={20} />
+                </span>
+                <input
+                  id="register-lastName"
+                  type="text"
+                  value={registerLastName}
+                  onChange={(e) => setRegisterLastName(e.target.value)}
+                  placeholder="Pérez"
+                  className={styles.input}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="register-secondLastName" className={styles.label}>
+                Apellido Materno
+              </label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.iconLeft}>
+                  <User size={20} />
+                </span>
+                <input
+                  id="register-secondLastName"
+                  type="text"
+                  value={registerSecondLastName}
+                  onChange={(e) => setRegisterSecondLastName(e.target.value)}
+                  placeholder="Pérez"
                   className={styles.input}
                   required
                 />
@@ -180,7 +224,7 @@ export default function Auth() {
                   type="email"
                   value={registerEmail}
                   onChange={(e) => setRegisterEmail(e.target.value)}
-                  placeholder="tu@email.com"
+                  placeholder="juan@email.com"
                   className={styles.input}
                   required
                 />
@@ -188,22 +232,24 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-organization" className={styles.label}>
-                Organización
+              <label htmlFor="register-role" className={styles.label}>
+                Tipo de usuario
               </label>
               <div className={styles.inputWrapper}>
                 <span className={styles.iconLeft}>
-                  <Building2 size={20} />
+                  <UserKey size={20} />
                 </span>
-                <input
-                  id="register-organization"
-                  type="text"
-                  value={registerOrganization}
-                  onChange={(e) => setRegisterOrganization(e.target.value)}
-                  placeholder="Tu empresa o universidad"
-                  className={styles.input}
+                <select
+                  id="register-role"
+                  value={registerRole}
+                  onChange={(e) => setRegisterRole(e.target.value)}
+                  className={styles.select}
                   required
-                />
+                >
+                  <option value="">Selecciona tu tipo de usuario</option>
+                  <option value='estudiante'>Estudiante</option>
+                  <option value='consultor'>Consultor</option>
+                </select>
               </div>
             </div>
 
@@ -266,6 +312,8 @@ export default function Auth() {
               </div>
             </div>
 
+            {/* No pondre esto de momento */}
+            {/*
             <label style={{ display: "flex", alignItems: "flex-start", gap: "0.65rem", color: "#2e2e2e" }}>
               <input
                 id="accept-terms"
@@ -286,7 +334,8 @@ export default function Auth() {
                 </a>
               </span>
             </label>
-
+            */}
+            
             <button type="submit" className={styles.buttonPrimary}>
               Crear Cuenta
             </button>
