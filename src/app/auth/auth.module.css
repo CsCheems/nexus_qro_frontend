@@ -118,6 +118,22 @@
   box-shadow: 0 0 0 3px rgba(37, 98, 234, 0.2);
 }
 
+.select {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 3rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  transition: 0.3s;
+  font-size: 0.95rem;
+  appearance: base-select;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #2562EA;
+  box-shadow: 0 0 0 3px rgba(37, 98, 234, 0.2);
+}
+
 .iconLeft {
   position: absolute;
   left: 1rem;
