@@ -154,7 +154,7 @@ export default function Auth() {
           <form onSubmit={handleRegisterSubmit} className={styles.form}>
             {/* Name */}
             <div className={styles.field}>
-              <label htmlFor="register-name" className={styles.label}>
+              <label htmlFor="name" className={styles.label}>
                 Nombre(s)
               </label>
               <div className={styles.inputWrapper}>
@@ -162,7 +162,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-name"
+                  id="name"
                   type="text"
                   value={registerName}
                   onChange={(e) => setRegisterName(e.target.value)}
@@ -174,7 +174,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-lastName" className={styles.label}>
+              <label htmlFor="lastName" className={styles.label}>
                 Apellido Paterno
               </label>
               <div className={styles.inputWrapper}>
@@ -182,7 +182,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-lastName"
+                  id="lastName"
                   type="text"
                   value={registerLastName}
                   onChange={(e) => setRegisterLastName(e.target.value)}
@@ -194,7 +194,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-secondLastName" className={styles.label}>
+              <label htmlFor="secondLastName" className={styles.label}>
                 Apellido Materno
               </label>
               <div className={styles.inputWrapper}>
@@ -202,7 +202,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-secondLastName"
+                  id="secondLastName"
                   type="text"
                   value={registerSecondLastName}
                   onChange={(e) => setRegisterSecondLastName(e.target.value)}
@@ -214,7 +214,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-email" className={styles.label}>
+              <label htmlFor="email" className={styles.label}>
                 Correo Electrónico
               </label>
               <div className={styles.inputWrapper}>
@@ -222,7 +222,7 @@ export default function Auth() {
                   <Mail size={20} />
                 </span>
                 <input
-                  id="register-email"
+                  id="email"
                   type="email"
                   value={registerEmail}
                   onChange={(e) => setRegisterEmail(e.target.value)}
@@ -234,7 +234,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-phone" className={styles.label}>
+              <label htmlFor="phone" className={styles.label}>
                 Correo Electrónico
               </label>
               <div className={styles.inputWrapper}>
@@ -242,7 +242,7 @@ export default function Auth() {
                   <Phone size={20} />
                 </span>
                 <PhoneInput
-                  id="register-phone"
+                  id="phone"
                   value={registerPhone as E164Number | undefined}
                   onChange={(value) => setRegisterPhone(value ?? "")}
                   className={styles.input}
@@ -252,7 +252,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-role" className={styles.label}>
+              <label htmlFor="role" className={styles.label}>
                 Tipo de usuario
               </label>
               <div className={styles.inputWrapper}>
@@ -260,7 +260,7 @@ export default function Auth() {
                   <UserKey size={20} />
                 </span>
                 <select
-                  id="register-role"
+                  id="role"
                   value={registerRole}
                   onChange={(e) => setRegisterRole(e.target.value)}
                   className={styles.select}
@@ -274,7 +274,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-password" className={styles.label}>
+              <label htmlFor="password" className={styles.label}>
                 Contraseña
               </label>
               <div className={styles.inputWrapper}>
@@ -282,7 +282,7 @@ export default function Auth() {
                   <Lock size={20} />
                 </span>
                 <input
-                  id="register-password"
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   value={registerPassword}
                   onChange={(e) => setRegisterPassword(e.target.value)}
