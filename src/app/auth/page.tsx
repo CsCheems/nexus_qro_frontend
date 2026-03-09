@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey, Phone } from "lucide-react";
+import PhoneInput from 'react-phone-number-input'
+import type { E164Number } from "react-phone-number-input";
+import 'react-phone-number-input/style.css';
 import styles from "./auth.module.css";
 
 export default function Auth() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -18,9 +20,9 @@ export default function Auth() {
   const [registerLastName, setRegisterLastName] = useState("");
   const [registerSecondLastName, setRegisterSecondLastName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPhone, setRegisterPhone] = useState<string>("");
   const [registerRole, setRegisterRole] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -152,7 +154,7 @@ export default function Auth() {
           <form onSubmit={handleRegisterSubmit} className={styles.form}>
             {/* Name */}
             <div className={styles.field}>
-              <label htmlFor="register-name" className={styles.label}>
+              <label htmlFor="name" className={styles.label}>
                 Nombre(s)
               </label>
               <div className={styles.inputWrapper}>
@@ -160,7 +162,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-name"
+                  id="name"
                   type="text"
                   value={registerName}
                   onChange={(e) => setRegisterName(e.target.value)}
@@ -172,7 +174,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-lastName" className={styles.label}>
+              <label htmlFor="lastName" className={styles.label}>
                 Apellido Paterno
               </label>
               <div className={styles.inputWrapper}>
@@ -180,7 +182,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-lastName"
+                  id="lastName"
                   type="text"
                   value={registerLastName}
                   onChange={(e) => setRegisterLastName(e.target.value)}
@@ -192,7 +194,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-secondLastName" className={styles.label}>
+              <label htmlFor="secondLastName" className={styles.label}>
                 Apellido Materno
               </label>
               <div className={styles.inputWrapper}>
@@ -200,7 +202,7 @@ export default function Auth() {
                   <User size={20} />
                 </span>
                 <input
-                  id="register-secondLastName"
+                  id="secondLastName"
                   type="text"
                   value={registerSecondLastName}
                   onChange={(e) => setRegisterSecondLastName(e.target.value)}
@@ -212,7 +214,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-email" className={styles.label}>
+              <label htmlFor="email" className={styles.label}>
                 Correo Electrónico
               </label>
               <div className={styles.inputWrapper}>
@@ -220,7 +222,7 @@ export default function Auth() {
                   <Mail size={20} />
                 </span>
                 <input
-                  id="register-email"
+                  id="email"
                   type="email"
                   value={registerEmail}
                   onChange={(e) => setRegisterEmail(e.target.value)}
@@ -232,7 +234,25 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-role" className={styles.label}>
+              <label htmlFor="phone" className={styles.label}>
+                Correo Electrónico
+              </label>
+              <div className={styles.inputWrapper}>
+                <span className={styles.iconLeft}>
+                  <Phone size={20} />
+                </span>
+                <PhoneInput
+                  id="phone"
+                  value={registerPhone as E164Number | undefined}
+                  onChange={(value) => setRegisterPhone(value ?? "")}
+                  className={styles.input}
+                  defaultCountry="MX"
+                />
+              </div>
+            </div>
+
+            <div className={styles.field}>
+              <label htmlFor="role" className={styles.label}>
                 Tipo de usuario
               </label>
               <div className={styles.inputWrapper}>
@@ -240,7 +260,7 @@ export default function Auth() {
                   <UserKey size={20} />
                 </span>
                 <select
-                  id="register-role"
+                  id="role"
                   value={registerRole}
                   onChange={(e) => setRegisterRole(e.target.value)}
                   className={styles.select}
@@ -254,7 +274,7 @@ export default function Auth() {
             </div>
 
             <div className={styles.field}>
-              <label htmlFor="register-password" className={styles.label}>
+              <label htmlFor="password" className={styles.label}>
                 Contraseña
               </label>
               <div className={styles.inputWrapper}>
@@ -262,7 +282,7 @@ export default function Auth() {
                   <Lock size={20} />
                 </span>
                 <input
-                  id="register-password"
+                  id="password"
                   type={showPassword ? "text" : "password"}
                   value={registerPassword}
                   onChange={(e) => setRegisterPassword(e.target.value)}
@@ -279,35 +299,6 @@ export default function Auth() {
                   aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="register-confirm-password" className={styles.label}>
-                Confirmar Contraseña
-              </label>
-              <div className={styles.inputWrapper}>
-                <span className={styles.iconLeft}>
-                  <Lock size={20} />
-                </span>
-                <input
-                  id="register-confirm-password"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={registerConfirmPassword}
-                  onChange={(e) => setRegisterConfirmPassword(e.target.value)}
-                  placeholder="Confirma tu contraseña"
-                  className={styles.input}
-                  required
-                  style={{ paddingRight: "3rem" }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword((v) => !v)}
-                  className={styles.iconRight}
-                  aria-label={showConfirmPassword ? "Ocultar confirmación" : "Mostrar confirmación"}
-                >
-                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
