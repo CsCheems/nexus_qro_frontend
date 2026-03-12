@@ -7,8 +7,11 @@ import PhoneInput from 'react-phone-number-input'
 import type { E164Number } from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
 import styles from "./auth.module.css";
+import { register } from "@/services/authService";
+import { useToast } from "../components/toast/toast";
 
 export default function Auth() {
+  const toast = useToast();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,21 +33,63 @@ export default function Auth() {
     console.log("Login attempt:", { loginEmail, loginPassword, rememberMe });
   };
 
-  const handleRegisterSubmit = (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Register attempt:", {
-      registerName,
-      registerLastName,
-      registerSecondLastName,
-      registerEmail,
-      registerRole,
-      registerPassword,
-    });
+
+    if(!registerPhone){
+      toast.error("Debes ingresar un número de telefono");
+      return;
+    }
+
+    if(!registerRole){
+      toast.error("Selecciona un tipo de usuario");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{12,}$/
+
+    if(!passwordRegex.test(registerPassword)){
+      toast.error("La contraseña debe tener mínimo 12 caracteres, una mayúscula y un número");
+      return;
+    }
+
+    const userData = {
+      name: registerName,
+      lastName: registerLastName,
+      secondLastName: registerSecondLastName,
+      email: registerEmail,
+      phone: registerPhone,
+      role: registerRole, 
+      password: registerPassword
+    }
+    try{
+      const res = await register(userData);
+      toast.success("Cuenta registrada correctamente");
+    }catch(error: any){
+      toast.error(error.message || "Error al registrar usuario");
+    }
   };
 
   return (
     <div className={styles.page}>
-      <div className={styles.side}>
+
+      <div className={styles.mobileSwitch}>
+        <button
+          type="button"
+          onClick={() => setIsRegisterMode(false)}
+          className={!isRegisterMode ? styles.mobileTabActive : styles.mobileTab}
+        >
+          Iniciar Sesión
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsRegisterMode(true)}
+          className={isRegisterMode ? styles.mobileTabActive : styles.mobileTab}
+        >
+          Crear Cuenta
+        </button>
+      </div>
+      <div className={`${styles.side} ${!isRegisterMode ? styles.activeMobile : styles.hiddenMobile}` }>
         <div className={styles.container}>
           <Link href="/" className={styles.backLink}>
             <ArrowLeft size={16} />
@@ -62,6 +107,8 @@ export default function Auth() {
               </div>
             </div>
           </div>
+
+          
 
           <div style={{ marginBottom: "2rem" }}>
             <h1 className={styles.title}>Iniciar Sesión</h1>
@@ -103,7 +150,7 @@ export default function Auth() {
                   type={showPassword ? "text" : "password"}
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="********"
                   className={styles.input}
                   required
                   style={{ paddingRight: "3rem" }}
@@ -143,7 +190,9 @@ export default function Auth() {
         </div>
       </div>
 
-      <div className={styles.side}>
+      
+
+      <div className={`${styles.side} ${isRegisterMode ? styles.activeMobile : styles.hiddenMobile}`}>
         <div className={styles.container}>
           {/* Header */}
           <div style={{ marginBottom: "1.5rem" }}>
@@ -286,7 +335,7 @@ export default function Auth() {
                   type={showPassword ? "text" : "password"}
                   value={registerPassword}
                   onChange={(e) => setRegisterPassword(e.target.value)}
-                  placeholder="Mínimo 8 caracteres"
+                  placeholder="Mínimo 12 caracteres"
                   className={styles.input}
                   required
                   minLength={8}
