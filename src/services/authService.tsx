@@ -32,9 +32,10 @@ export const register = async(userData: RegisterUserData) => {
 
 export const login = async(userData: LoginUserData) =>{
     try{
-        const response = await api.post("/auth/login", userData);
-        console.log(response);
-        localStorage.setItem("token", response.data.token);
+        const response = await api.post("/auth/login", userData, {
+            withCredentials: true
+        });
+        console.log(response.data);
         return response;
     }catch(error: any){
         if(error.response){
