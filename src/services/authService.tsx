@@ -29,3 +29,20 @@ export const register = async(userData: RegisterUserData) => {
         }
     }
 }
+
+export const login = async(userData: LoginUserData) =>{
+    try{
+        const response = await api.post("/auth/login", userData);
+        console.log(response);
+        localStorage.setItem("token", response.data.token);
+        return response;
+    }catch(error: any){
+        if(error.response){
+            throw new Error(error.response.data.message);
+        }else if(error.request){
+            throw new Error("Error, no se recibió respuesta");
+        }else{
+            throw new Error("Error en el servidor");
+        }
+    }
+}
