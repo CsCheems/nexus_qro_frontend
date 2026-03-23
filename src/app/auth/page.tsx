@@ -36,7 +36,6 @@ export default function Auth() {
       if(response.status === 200){
         toast.success("Inicio de sesion exitoso");
       }
-      console.log("response", response.status);
     }catch(error: any){
       toast.error(error.message);
     }
