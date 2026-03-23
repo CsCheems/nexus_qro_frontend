@@ -7,7 +7,7 @@ import PhoneInput from 'react-phone-number-input'
 import type { E164Number } from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
 import styles from "./auth.module.css";
-import { register } from "@/services/authService";
+import { register, login } from "@/services/authService";
 import { useToast } from "../components/toast/toast";
 
 export default function Auth() {
@@ -28,9 +28,18 @@ export default function Auth() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login attempt:", { loginEmail, loginPassword, rememberMe });
+    const userData = { email: loginEmail, password: loginPassword };
+    try{
+      const response = await login(userData);
+      if(response.status === 200){
+        toast.success("Inicio de sesion exitoso");
+      }
+      console.log("response", response.status);
+    }catch(error: any){
+      toast.error(error.message);
+    }
   };
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
@@ -257,7 +266,6 @@ export default function Auth() {
                   onChange={(e) => setRegisterSecondLastName(e.target.value)}
                   placeholder="Pérez"
                   className={styles.input}
-                  required
                 />
               </div>
             </div>
