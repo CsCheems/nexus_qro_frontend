@@ -9,8 +9,10 @@ import 'react-phone-number-input/style.css';
 import styles from "./auth.module.css";
 import { register, login } from "@/services/authService";
 import { useToast } from "../components/toast/toast";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
+  const router = useRouter();
   const toast = useToast();
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +37,7 @@ export default function Auth() {
       const response = await login(userData);
       if(response.status === 200){
         toast.success("Inicio de sesion exitoso");
+        router.replace("/");
       }
     }catch(error: any){
       toast.error(error.message);
