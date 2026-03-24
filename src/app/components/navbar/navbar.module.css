@@ -136,6 +136,126 @@
   color: #2562ea;
 }
 
+
+.userMenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.userButton {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e2e2e;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.userButton:hover {
+  background: rgba(37, 98, 234, 0.08);
+  color: #2562ea;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  min-width: 200px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+.dropdown a,
+.dropdown button {
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #2e2e2e;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+  background: rgba(37, 98, 234, 0.08);
+  color: #2562ea;
+}
+
+.logoutButton {
+  color: #dc2626;
+}
+
+.logoutButton:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+}
+
+.divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 12px 0;
+}
+
+.mobileUserSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileUsername {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2e2e2e;
+}
+
+.mobileUserSection a,
+.mobileUserSection button {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8892b0;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobileUserSection a:hover,
+.mobileUserSection button:hover {
+  color: #2562ea;
+}
+
+.mobileUserSection .logoutButton {
+  color: #dc2626;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .navDesktop {
     display: none;
