@@ -53,9 +53,11 @@ export const getMe = async () => {
         const response = await api.get("/auth/me", {
             withCredentials: true,
         });
+        console.log("response:", response);
         return response.data;
     }catch(error: any){
-        return null;
+        console.error("Error en getMe:", error.response?.data || error.message);
+        throw error;
     }
 }
 
