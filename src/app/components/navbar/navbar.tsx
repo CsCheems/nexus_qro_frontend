@@ -28,8 +28,10 @@ export default function Navbar() {
     useEffect(() => {
         const obtenerUsuario = async () => {
             const data = await getMe();
-            if(data?.user){
-                setUser(data.user);
+            console.log("getMe Data: ", data?.usuario);
+            if(data?.usuario){
+                setUser(data.usuario);
+                localStorage.setItem("user", JSON.stringify(data.usuario));
             }else{
                 setUser(null);
             }
@@ -97,14 +99,14 @@ export default function Navbar() {
                     {user ? (
                         <div className={style.userMenu} ref={menuRef}>
                             <button className={style.userButton} onClick={() => setIsDropdownOpen(prev => !prev)}>
-                                {user.name || user.nombres}
+                                {user.usuario.nombres}
                             </button>
 
                             {isDropdownOpen && (
                                 <div className={style.dropdown}>
-                                <Link href="/perfil">Perfil</Link>
-                                <Link href="/proyectos">Proyectos</Link>
-                                <Link href="/notificaciones">Notificaciones</Link>
+                                <Link href="/profile">Perfil</Link>
+                                <Link href="/projects">Proyectos</Link>
+                                <Link href="">Notificaciones</Link>
                                 <button
                                     type="button"
                                     className={style.logoutButton}
@@ -116,7 +118,7 @@ export default function Navbar() {
                             )}
                         </div>
                     ):(
-                    <Link href="/auth" className={style.ctaButton}>
+                    <Link href="/login" className={style.ctaButton}>
                         Acceder
                     </Link>
                     )}
