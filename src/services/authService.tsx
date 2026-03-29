@@ -18,7 +18,7 @@ interface LoginUserData{
 export const register = async(userData: RegisterUserData) => {
     try{
         const response = await api.post("/auth/register", userData);
-        return response.data;
+        return response;
     }catch(error: any){
         if(error.response){
             throw new Error(error.response.data.message || "Error en el registro");
@@ -45,5 +45,30 @@ export const login = async(userData: LoginUserData) =>{
         }else{
             throw new Error("Error en el servidor");
         }
+    }
+}
+
+export const getMe = async () => {
+    try{
+        const response = await api.get("/auth/me", {
+            withCredentials: true,
+        });
+        console.log("response:", response);
+        return response.data;
+    }catch(error: any){
+        console.error("Error en getMe:", error.response?.data || error.message);
+        throw error;
+    }
+}
+
+export const logout = async () => {
+    try{
+        await api.post("/auth/logout", {},
+            {
+                withCredentials: true,
+            }
+        );
+    }catch(error: any){
+        console.error("Error al cerrar sesión");
     }
 }

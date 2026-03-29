@@ -6,7 +6,7 @@ import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey, Phone } from "lucide
 import PhoneInput from 'react-phone-number-input'
 import type { E164Number } from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
-import styles from "./auth.module.css";
+import styles from "./login.module.css";
 import { register, login } from "@/services/authService";
 import { useToast } from "../components/toast/toast";
 import { useRouter } from "next/navigation";
@@ -37,6 +37,7 @@ export default function Auth() {
       const response = await login(userData);
       if(response.status === 200){
         toast.success("Inicio de sesion exitoso");
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         router.replace("/");
       }
     }catch(error: any){
@@ -294,7 +295,7 @@ export default function Auth() {
 
             <div className={styles.field}>
               <label htmlFor="phone" className={styles.label}>
-                Correo Electrónico
+                Teléfono
               </label>
               <div className={styles.inputWrapper}>
                 <span className={styles.iconLeft}>
