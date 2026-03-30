@@ -101,7 +101,7 @@ return (
         </div>
 
         <div className={styles.grid}>
-            {/* LEFT */}
+            {/* Seccion Izquierda */}
             <div className={styles.leftColumn}>
             <div className={styles.card}>
                 <div className={styles.avatarWrapper}>
@@ -126,7 +126,7 @@ return (
             </div>
             </div>
 
-            {/* RIGHT */}
+            {/* Seccion Derecha */}
             <div className={styles.rightColumn}>
             <div className={styles.card}>
                 <div className={styles.cardHeader}>
@@ -330,7 +330,6 @@ return (
 
                     <div className={styles.infoGrid}>
                         
-                        {/* NOMBRE */}
                         <div className={styles.field}>
                             <label>Nombre</label>
                             <input
