@@ -36,3 +36,9 @@ export interface ProjectFilters {
     estado: ProjectStatus | "todos";
     modalidad: WorkModel | "todos";
 }
+
+export interface ApiProjectFilters {
+  search?: string;
+  estado?: ProjectStatus;
+  modalidad?: WorkModel;
+}

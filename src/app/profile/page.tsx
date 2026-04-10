@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { ArrowLeft, User, Mail, Building2, Edit, Save, X, Phone } from "lucide-react";
+import { User, Mail, Building2, Edit, Save, X, Phone } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
-import type { E164Number } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { profileFieldsByRole, UserRole } from "@/constants/profiles";
 
@@ -59,6 +57,7 @@ export default function Profile() {
             const data = await getMe();
             if(data?.usuario){
                 setUser(data.usuario);
+                setEditForm(data);
             }else{
                 setUser(null);
             }
@@ -73,7 +72,11 @@ export default function Profile() {
 
     const formatMonthYear = (dateString: string) => {
         const date = new Date(dateString);
-    }
+        return date.toLocaleDateString("es-MX", {
+            year: "numeric",
+            month: "long"
+        });
+    };
             
 
     if (!user || !editForm) {
@@ -290,7 +293,7 @@ export default function Profile() {
                                                 <label>Teléfono</label>
                                                 <PhoneInput
                                                     className={styles.input}
-                                                    value={editForm.usuario?.telefono as E164Number || ""}
+                                                    value={editForm.usuario?.telefono || ""}
                                                     onChange={(value) =>
                                                         setEditForm({
                                                             ...editForm,

@@ -6,7 +6,7 @@ import { Search ,Filter ,Calendar ,TrendingUp ,Clock ,CheckCircle2 ,AlertCircle 
 import styles from "./projects.module.css";
 import Navbar from "../components/navbar/navbar";
 
-import type { Project, ProjectFilters, ProjectStatus, WorkModel, CreateProjectPayload } from "@/types/projects";
+import type { Project, ApiProjectFilters, ProjectFilters, ProjectStatus, WorkModel, CreateProjectPayload } from "@/types/projects";
 
 import { PROJECT_STATUS_OPTIONS, PROJECT_STATUS_FILTERS, WORK_MODEL_OPTIONS, WORK_MODEL_FILTERS, APOYO_FILTERS } from "@/constants/project";
 
@@ -16,7 +16,6 @@ import { formatDate, truncateText } from "@/utils/projectFormat";
 
 import { getProjects, createProject, updateProject } from "@/services/projectService";
 import { useAuth } from "@/context/auth.context";
-
 
 export default function ProjectsPage() {
   
@@ -40,7 +39,7 @@ export default function ProjectsPage() {
   const [newProject, setNewProject] =
     useState<CreateProjectPayload>(initialProjectForm);
 
-  const buildApiFilters = (currentFilters: ProjectFilters) => {
+  const buildApiFilters = (currentFilters: ProjectFilters): ApiProjectFilters => {
     return {
       search: currentFilters.search.trim() || undefined,
       estado: currentFilters.estado !== "todos" ? currentFilters.estado : undefined,

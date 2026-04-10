@@ -1,8 +1,9 @@
 import api from "./api";
 
-import type { CreateProjectPayload, Project, ProjectFilters } from "@/types/projects";
+import type { CreateProjectPayload, Project, ApiProjectFilters } from "@/types/projects";
 
-export const getProjects = async (filters?: ProjectFilters): Promise<Project[]> => {
+
+export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[]> => {
     try {
         const response = await api.get("/projects", {
             params: filters,

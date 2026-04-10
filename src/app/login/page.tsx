@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, User, UserKey, Phone } from "lucide-react";
 import PhoneInput from 'react-phone-number-input'
-import type { E164Number } from "react-phone-number-input";
+import type { Value } from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
 import styles from "./login.module.css";
 import { login } from "@/services/authService";
@@ -28,7 +28,7 @@ export default function Auth() {
   const [registerLastName, setRegisterLastName] = useState("");
   const [registerSecondLastName, setRegisterSecondLastName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPhone, setRegisterPhone] = useState<string>("");
+  const [registerPhone, setRegisterPhone] = useState<Value>();
   const [registerRole, setRegisterRole] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -310,8 +310,8 @@ export default function Auth() {
                 </span>
                 <PhoneInput
                   id="phone"
-                  value={registerPhone as E164Number | undefined}
-                  onChange={(value) => setRegisterPhone(value ?? "")}
+                  value={registerPhone }
+                  onChange={setRegisterPhone}
                   className={styles.input}
                   defaultCountry="MX"
                 />

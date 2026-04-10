@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext,  useRef, useState} from "react";
+import { createContext, useContext,  useRef, useState, ReactNode } from "react";
 import styles from "./toast.module.css";
 
 type ToastType = "success" | "error" | "info";
