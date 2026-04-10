@@ -62,7 +62,7 @@ export default function Hero() {
           </h1>
 
           <p className={style.subtitle}>
-            Nexus-Qro impulsa la transformación tecnológica mediante la
+            IngeniCCa impulsa la transformación tecnológica mediante la
             vinculación estratégica entre el sector académico, industrial y gubernamental.
           </p>
 

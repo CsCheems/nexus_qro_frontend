@@ -6,15 +6,82 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { getMe, logout } from "@/services/authService";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth.context";
 
-export default function Navbar() {
+type NavbarVariant = "home" | "internal";
+
+type UserRole = "consultor" | "estudiante" | "emprendedor" | "administrador" | "empresa" | "institucion";
+
+interface MenuItem {
+    label: string;
+    href: string;
+}
+
+const menuByRole: Record<UserRole, MenuItem[]> = {
+  consultor: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Proyectos", href: "/projects" },
+    { label: "Notificaciones", href: "/notifications" }
+  ],
+  estudiante: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Proyectos", href: "/projects" },
+    { label: "Mis proyectos", href: "/myprojects" },
+    { label: "Notificaciones", href: "/notifications" },
+    { label: "Cursos", href: "/courses"}
+  ],
+  emprendedor: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Emprendimiento", href: "/venture" },
+    { label: "Mis emprendimientos", href: "/myventures" },
+    { label: "Notificaciones", href: "/notifications" },
+  ],
+  administrador: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Usuarios", href: "/users" },
+    { label: "Proyectos", href: "/projects" },
+    { label: "Emprendimientos", href: "/ventures"},
+    { label: "Panel admin", href: "/admin" }
+  ],
+  empresa: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Proyectos", href: "/projects" },
+    { label: "Notificaciones", href: "/notifications" }
+  ],
+  institucion: [
+    { label: "Perfil", href: "/profile" },
+    { label: "Proyectos", href: "/projects" },
+    { label: "Notificaciones", href: "/notifications" }
+  ]
+};
+
+const navLinksByVariant: Record<NavbarVariant, MenuItem[]> = {
+  home: [
+    { label: "Plataforma", href: "#plataforma" },
+    { label: "Servicios", href: "#servicios" },
+    { label: "Nosotros", href: "#nosotros" },
+    { label: "Contacto", href: "#contacto" }
+  ],
+  internal: [
+    { label: "Inicio", href: "/" }
+  ],
+};
+
+export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
+
+    const navLinks = navLinksByVariant[variant];
+    
     const menuRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    const [user, setUser] = useState<any>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const { user, loading, setUser } = useAuth();
+
+    const role = user?.usuario?.rol as UserRole | undefined;
+    const menuItems = role ? menuByRole[role] : [];
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,20 +90,6 @@ export default function Navbar() {
 
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const obtenerUsuario = async () => {
-            const data = await getMe();
-            console.log("getMe Data: ", data?.usuario);
-            if(data?.usuario){
-                setUser(data.usuario);
-                localStorage.setItem("user", JSON.stringify(data.usuario));
-            }else{
-                setUser(null);
-            }
-        };
-        obtenerUsuario();
     }, []);
 
     useEffect(() => {
@@ -76,13 +129,12 @@ export default function Navbar() {
             <div className={style.container}>
                 <div className={style.inner}>
                 
-                {/* Logo */}
                 <div className={style.logoContainer}>
                     <div className={style.logoIcon}>
                     <span>I</span>
                     </div>
                     <div>
-                    <div className={style.logoTitle}>Ingenia</div>
+                    <div className={style.logoTitle}>IngeniCCa</div>
                     <div className={style.logoSubtitle}>
                         Plataforma de Innovación
                     </div>
@@ -91,11 +143,11 @@ export default function Navbar() {
 
                 {/* Desktop Navigation */}
                 <nav className={style.navDesktop}>
-                    <a href="#plataforma">Plataforma</a>
-                    <a href="#servicios">Servicios</a>
-                    <a href="#nosotros">Nosotros</a>
-                    <a href="#contacto">Contacto</a>
-
+                    {navLinks.map((link) => (
+                        <Link key = {link.href} href={link.href}>
+                            {link.label}
+                        </Link>
+                    ))}
                     {user ? (
                         <div className={style.userMenu} ref={menuRef}>
                             <button className={style.userButton} onClick={() => setIsDropdownOpen(prev => !prev)}>
@@ -103,10 +155,12 @@ export default function Navbar() {
                             </button>
 
                             {isDropdownOpen && (
-                                <div className={style.dropdown}>
-                                <Link href="/profile">Perfil</Link>
-                                <Link href="/projects">Proyectos</Link>
-                                <Link href="">Notificaciones</Link>
+                            <div className={style.dropdown}>
+                                {menuItems.map((item) => (
+                                <Link key={item.href} href={item.href}>
+                                    {item.label}
+                                </Link>
+                                ))}
                                 <button
                                     type="button"
                                     className={style.logoutButton}
@@ -114,7 +168,7 @@ export default function Navbar() {
                                 >
                                     Cerrar sesión
                                 </button>
-                                </div>
+                            </div>
                             )}
                         </div>
                     ):(
@@ -124,7 +178,6 @@ export default function Navbar() {
                     )}
                 </nav>
 
-                {/* Mobile Button */}
                 <button
                     className={style.mobileButton}
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -133,26 +186,28 @@ export default function Navbar() {
                 </button>
                 </div>
 
-                {/* Mobile Menu */}
                 {isMobileMenuOpen && (
                 <div className={style.mobileMenu}>
                     <nav className={style.mobileNav}>
-                    <a href="#plataforma">Plataforma</a>
-                    <a href="#servicios">Servicios</a>
-                    <a href="#nosotros">Nosotros</a>
-                    <a href="#contacto">Contacto</a>
+                    {navLinks.map((link) => (
+                        <Link key = {link.href} href={link.href}>
+                            {link.label}
+                        </Link>
+                    ))}
                     {user ? (
                         <>
                         <div className={style.divider}></div>
                         <div className={style.mobileUserSection}>
-                            <span className={style.mobileUsername}>{user.name || user.nombres}</span>
-                            <Link href="/perfil">Perfil</Link>
-                            <Link href="/proyectos">Proyectos</Link>
-                            <Link href="/notificaciones">Notificaciones</Link>
+                            <span className={style.mobileUsername}>{user.usuario.nombres}</span>
+                            {menuItems.map((item) => (
+                                <Link key={item.href} href={item.href}>
+                                    {item.label}
+                                </Link>
+                            ))}
                             <button
-                            type="button"
-                            className={style.logoutButton}
-                            onClick={handleLogout}
+                                type="button"
+                                className={style.logoutButton}
+                                onClick={handleLogout}
                             >
                                 Cerrar sesión
                             </button>

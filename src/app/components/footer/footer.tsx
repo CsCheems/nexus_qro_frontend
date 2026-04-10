@@ -42,7 +42,7 @@ export default function Footer() {
                 <span>N</span>
               </div>
               <div>
-                <div className={style.logoTitle}>Nexus-Qro</div>
+                <div className={style.logoTitle}>IngeniCCa</div>
                 <div className={style.logoSubtitle}>Plataforma de Innovación</div>
               </div>
             </div>
@@ -60,8 +60,8 @@ export default function Footer() {
 
               <div className={style.contactItem}>
                 <Mail className={style.contactIcon} />
-                <a href="mailto:contacto@nexus-qro.com">
-                  contacto@nexus-qro.com
+                <a href="mailto:">
+                  contacto@IngeniCCa.com
                 </a>
               </div>
 
@@ -92,7 +92,7 @@ export default function Footer() {
 
         <div className={style.bottom}>
           <p className={style.copyright}>
-            © {new Date().getFullYear()} Nexus-Qro. Todos los derechos reservados.
+            © {new Date().getFullYear()} IngeniCCa. Todos los derechos reservados.
           </p>
 
           <div className={style.socialRow}>

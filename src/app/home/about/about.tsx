@@ -18,15 +18,14 @@ export default function About() {
 
           <div>
             <div className={style.badge}>
-              <span className={style.badgeText}>Sobre Nexus-Qro</span>
+              <span className={style.badgeText}>Sobre IngeniCCa</span>
             </div>
 
             <h2 className={style.title}>Transformando el ecosistema de innovación</h2>
 
             <p className={style.paragraph}>
-              Nexus-Qro es una plataforma web progresiva (PWA) diseñada para facilitar la
-              colaboración entre actores clave del ecosistema tecnológico: academia, industria y
-              gobierno.
+              IngeniCCa es una plataforma diseñada para facilitar la
+              colaboración entre actores clave del ecosistema tecnológico: academia e industria 
             </p>
 
             <p className={style.paragraph}>
