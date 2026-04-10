@@ -119,7 +119,7 @@ export default function Auth() {
             <div className={styles.logoBox}>N</div>
             <div>
               <div className={styles.logoTitle}>
-                Nexus-Qro
+                IngeniCCa
               </div>
               <div className={styles.logoSubtitle}>
                 Plataforma de Innovación

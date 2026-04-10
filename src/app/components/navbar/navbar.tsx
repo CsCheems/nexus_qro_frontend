@@ -214,7 +214,7 @@ export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
                         </div>
                         </>
                     ) : (
-                        <Link href="/auth" className={style.ctaButton}>
+                        <Link href="/login" className={style.ctaButton}>
                             Acceder
                         </Link>
                     )}
