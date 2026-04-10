@@ -31,11 +31,13 @@ export default function ProfilePage() {
         setIsEditingPassword(!isEditingPassword);
     }
 
-    const handleSave = (e: React.FormEvent) => {
-        e.preventDefault();
-        setUser({ ...editForm });
-        setIsEditing(false);
-    };
+        <div className={styles.grid}>
+            {/* Seccion Izquierda */}
+            <div className={styles.leftColumn}>
+            <div className={styles.card}>
+                <div className={styles.avatarWrapper}>
+                    <div className={styles.avatar}>{getInitials()}</div>
+                </div>
 
     useEffect(() => {
         const obtenerUsuario = async () => {
@@ -57,14 +59,27 @@ export default function ProfilePage() {
     const formatMonthYear = (dateString: string) => {
     const date = new Date(dateString);
 
-    return date
-        .toLocaleDateString("es-MX", {
-        month: "long",
-        year: "numeric",
-        })
-        .replace(" de ", " ")
-        .replace(/^./, (c) => c.toUpperCase());
-    };
+            {/* Seccion Derecha */}
+            <div className={styles.rightColumn}>
+            <div className={styles.card}>
+                <div className={styles.cardHeader}>
+                <h3>Información Personal</h3>
+
+                <button
+                    onClick={handleEditToggle}
+                    className={styles.editBtn}
+                >
+                    {isEditing ? (
+                    <>
+                        <X size={16} /> Cancelar
+                    </>
+                    ) : (
+                    <>
+                        <Edit size={16} /> Editar
+                    </>
+                    )}
+                </button>
+                </div>
 
     if (!user || !editForm) {
         return <p>Cargando...</p>;
@@ -246,7 +261,24 @@ export default function ProfilePage() {
 
                         </div>
 
-                        <hr className={styles.sectionDivider} />
+                    <div className={styles.infoGrid}>
+                        
+                        <div className={styles.field}>
+                            <label>Nombre</label>
+                            <input
+                                className={styles.input}
+                                value={editForm.usuario?.nombres}
+                                onChange={(e) =>
+                                    setEditForm({
+                                        ...editForm,
+                                        usuario: {
+                                            ...editForm.usuario,
+                                            nombres: e.target.value
+                                        }
+                                    })
+                                }
+                            />
+                        </div>
 
                         <h3 className={styles.sectionTitle}>Seguridad</h3>
 
@@ -540,5 +572,7 @@ export default function ProfilePage() {
             </div>
             </div>
         </div>
-        );
+        </div>
+    </div>
+    );
 }
