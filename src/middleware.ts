@@ -7,7 +7,8 @@ export function middleware(request: NextRequest){
     const { pathname } = request.nextUrl;
 
     const protectedRoutes = [
-        "/profile"
+        "/profile",
+        "/proyects"
     ];
 
     const isProtected = protectedRoutes.some((route) => pathname.startsWith(route));
@@ -21,5 +22,5 @@ export function middleware(request: NextRequest){
 }
 
 export const config = {
-  matcher: ["/profile/:path*"],
+  matcher: ["/profile/:path*", "/projects/:path*"]
 };

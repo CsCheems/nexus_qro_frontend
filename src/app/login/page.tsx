@@ -7,9 +7,12 @@ import PhoneInput from 'react-phone-number-input'
 import type { E164Number } from "react-phone-number-input";
 import 'react-phone-number-input/style.css';
 import styles from "./login.module.css";
-import { register, login } from "@/services/authService";
+import { login } from "@/services/authService";
+import { register } from "@/services/usersService";
 import { useToast } from "../components/toast/toast";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth.context";
+import { getMe } from "@/services/authService";
 
 export default function Auth() {
   const router = useRouter();
@@ -30,6 +33,8 @@ export default function Auth() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
 
+  const { setUser } = useAuth();
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userData = { email: loginEmail, password: loginPassword };
@@ -37,7 +42,9 @@ export default function Auth() {
       const response = await login(userData);
       if(response.status === 200){
         toast.success("Inicio de sesion exitoso");
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        const me = await getMe();
+        console.log("Me: ", me.usuario);
+        setUser(me.usuario);
         router.replace("/");
       }
     }catch(error: any){
@@ -112,7 +119,7 @@ export default function Auth() {
             <div className={styles.logoBox}>N</div>
             <div>
               <div className={styles.logoTitle}>
-                Nexus-Qro
+                IngeniCCa
               </div>
               <div className={styles.logoSubtitle}>
                 Plataforma de Innovación
@@ -329,6 +336,9 @@ export default function Auth() {
                   <option value="">Selecciona tu tipo de usuario</option>
                   <option value='estudiante'>Estudiante</option>
                   <option value='consultor'>Consultor</option>
+                  <option value='institucion'>Institución</option>
+                  <option value='emprendedor'>Emprendedor</option>
+                  <option value='empresa'>Empresa</option>
                 </select>
               </div>
             </div>
