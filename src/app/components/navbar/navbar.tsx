@@ -26,14 +26,12 @@ const menuByRole: Record<UserRole, MenuItem[]> = {
   estudiante: [
     { label: "Perfil", href: "/profile" },
     { label: "Proyectos", href: "/projects" },
-    { label: "Mis proyectos", href: "/myprojects" },
     { label: "Notificaciones", href: "/notifications" },
     { label: "Cursos", href: "/courses"}
   ],
   emprendedor: [
     { label: "Perfil", href: "/profile" },
-    { label: "Emprendimiento", href: "/venture" },
-    { label: "Mis emprendimientos", href: "/myventures" },
+    { label: "Emprendimiento", href: "/ventures" },
     { label: "Notificaciones", href: "/notifications" },
   ],
   administrador: [
