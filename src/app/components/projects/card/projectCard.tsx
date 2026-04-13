@@ -12,6 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+
 import styles from "./projectCard.module.css";
 
 import type { Project, ProjectStatus, WorkModel } from "@/types/projects";
