@@ -1,8 +1,6 @@
 "use client"
 
-import React from 'react';
 import Link from 'next/link';
-
 import {
   Calendar,
   Mail,
@@ -25,7 +23,7 @@ interface VentureCardProps {
     showFullCardInfo: boolean;
 }
 
-export default function ventureCard({
+export default function VentureCard({
     venture,
     isVenturer,
     showFullCardInfo
@@ -108,12 +106,12 @@ export default function ventureCard({
             <>
               <div className={styles.metaItem}>
                 <Mail size={16} />
-                <span>{venture.contacto_email}</span>
+                <span>{venture.sector}</span>
               </div>
 
               <div className={styles.metaItem}>
                 <Phone size={16} />
-                <span>{venture.contacto_telefono}</span>
+                <span>{venture.industria}</span>
               </div>
             </>
           )}
@@ -121,20 +119,20 @@ export default function ventureCard({
 
         {showFullCardInfo && (
           <>
-            {venture.requisitos && (
+            {venture.descripcion && (
               <div className={styles.infoBlock}>
                 <h4 className={styles.infoTitle}>Requisitos</h4>
                 <p className={styles.infoText}>
-                  {truncateText(venture.requisitos, 100)}
+                  {truncateText(venture.descripcion, 100)}
                 </p>
               </div>
             )}
 
-            {venture.beneficios && (
+            {venture.problema_que_resuelve && (
               <div className={styles.infoBlock}>
                 <h4 className={styles.infoTitle}>Beneficios</h4>
                 <p className={styles.infoText}>
-                  {truncateText(venture.beneficios, 100)}
+                  {truncateText(venture.problema_que_resuelve, 100)}
                 </p>
               </div>
             )}
