@@ -2,62 +2,68 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { Search, Filter, AlertCircle, Plus, Briefcase, TrendingUp, CheckCircle2, Clock } from "lucide-react";
-import styles from "./projects.module.css";
+import styles from "./ventures.module.css";
 import Navbar from "../components/navbar/navbar";
 
 import { ProjectCard } from "../components/projects/card/projectCard";
 import { ProjectModal } from "../components/projects/modal/projectModal";
 
-import type { Project, ApiProjectFilters, ProjectFilters, ProjectStatus, WorkModel, CreateProjectPayload } from "@/types/projects";
+import { VentureCard } from "../components/ventures/card/ventureCard";
+import { VentureModal } from "../components/ventures/modal/venturetModal";
 
-import {  PROJECT_STATUS_FILTERS, WORK_MODEL_FILTERS } from "@/constants/project";
+import type { Venture, VentureFilters, VenturePayload, VentureStage, ApiVentureFilters } from "@/types/ventures";
 
-import { initialProjectForm } from "@/constants/projectForm";
-import { getProjectPermissions, type UserRole } from "@/utils/projectPermissions";
+import { WORK_MODEL_FILTERS } from "@/constants/project";
 
-import { getProjects, createProject } from "@/services/projectService";
+import { VENTURE_STAGE_FILTERS } from "@/constants/venture";
+
+import { initialVentureForm } from "@/constants/ventureForm"; 
+import { getVenturePermissions, type UserRole } from "@/utils/venturePermissions";
+import { getVentures, registerVenture } from "@/services/ventureService";
+
 import { useAuth } from "@/context/auth.context";
 
-export default function ProjectsPage() {
+export default function VenturesPage() {
   
   const { user, loading } = useAuth();
   
   const userRole = user?.usuario?.rol as UserRole | undefined;
 
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [ventures, setVentures] = useState<Venture[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [filters, setFilters] = useState<ProjectFilters>({
+  const [filters, setFilters] = useState<VentureFilters>({
     search: "",
-    estado: "todos",
-    modalidad: "todos"
+    venture_stage: "todos",
+    requiere_financiamiento: false
   });
 
   const [showFilters, setShowFilters] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [newProject, setNewProject] =
-    useState<CreateProjectPayload>(initialProjectForm);
+  const [newVenture, setNewVenture] = useState<VenturePayload>(initialVentureForm);
 
-  const buildApiFilters = (currentFilters: ProjectFilters): ApiProjectFilters => {
+  const [newProject, setNewProject] =
+    useState<VenturePayload>(initialVentureForm);
+
+  const buildApiFilters = (currentFilters: VentureFilters): ApiVentureFilters => {
     return {
       search: currentFilters.search.trim() || undefined,
-      estado: currentFilters.estado !== "todos" ? currentFilters.estado : undefined,
-      modalidad:
-        currentFilters.modalidad !== "todos" ? currentFilters.modalidad : undefined,
+      venture_stage: currentFilters.venture_stage !== "todos" ? currentFilters.venture_stage : undefined,
+      requiere_financiamiento: currentFilters.requiere_financiamiento
     };
   };
 
-  const handleGetProjects = async (currentFilters: ProjectFilters = filters) => {
+  const handleGetProjects = async (currentFilters: VentureFilters = filters) => {
     try {
       setIsLoading(true);
       setError(null);
 
       const apiFilters = buildApiFilters(currentFilters);
-      const data = await getProjects(apiFilters);
+      const data = await getVentures(apiFilters);
 
-      setProjects(data);
+      setVentures(data);
     } catch (err: any) {
         setError(err.message || "No se pudieron obtener los proyectos");
     } finally {
@@ -69,9 +75,9 @@ export default function ProjectsPage() {
     handleGetProjects(filters);
   }, []);
 
-  const handleFilterChange = <K extends keyof ProjectFilters>(
+  const handleFilterChange = <K extends keyof VentureFilters>(
     key: K,
-    value: ProjectFilters[K]
+    value: VentureFilters[K]
   ) => {
     setFilters((prev) => ({
       ...prev,
@@ -90,8 +96,8 @@ export default function ProjectsPage() {
   const resetFilters = () => {
     setFilters({
       search: "",
-      estado: "todos",
-      modalidad: "todos"
+      venture_stage: "todos",
+      requiere_financiamiento: false
     });
   };
 
@@ -99,7 +105,7 @@ export default function ProjectsPage() {
 
   const closeCreateModal = () => {
     setShowCreateModal(false);
-    setNewProject(initialProjectForm);
+    setNewProject(initialVentureForm);
   };
 
   const handleCreateProject = async (
@@ -116,29 +122,29 @@ export default function ProjectsPage() {
       setIsSubmitting(true);
       setError(null);
 
-      const createdProject = await createProject(newProject);
+      const createdVenture = await createVenture(newVenture);
 
-      setProjects((prev) => [createdProject, ...prev]);
+      setVentures((prev) => [createdVenture, ...prev]);
       closeCreateModal();
     } catch (err: any) {
-      alert(err.message || "No se pudo crear el proyecto");
+      alert(err.message || "No se pudo registrar el emprendimiento");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const projectStats = useMemo(() => {
+  const ventureStats = useMemo(() => {
     return {
-      total: projects.length,
-      iniciados: projects.filter((p) => p.estado === "Iniciado").length,
-      finalizados: projects.filter((p) => p.estado === "Finalizado").length,
-      planeacion: projects.filter((p) => p.estado === "En Planeación").length,
+      total: ventures.length,
+      idea: ventures.filter((v) => v.venture_stage === "Idea").length,
+      fromalizacion: ventures.filter((v) => v.venture_stage === "Formalización").length,
+      operacion: ventures.filter((v) => v.venture_stage === "Operación").length,
     };
-  }, [projects]);
+  }, [ventures]);
 
   const hasActiveFilters =
-    filters.estado !== "todos" ||
-    filters.modalidad !== "todos" ||
+    filters.venture_stage !== "todos" ||
+    filters.requiere_financiamiento !== false ||
     filters.search.trim() !== "";
 
   if (loading) {
@@ -149,11 +155,11 @@ export default function ProjectsPage() {
     return <div>No se pudo obtener el rol</div>;
   }
 
-  const permissions = getProjectPermissions(userRole);
-  const isStudent = userRole === "estudiante";
+  const permissions = getVenturePermissions(userRole);
+  const isVenturer = userRole === "emprendedor";
 
   const openCreateModal = () => {
-    if (!permissions.canCreateProject) return;
+    if (!permissions.canCreateVenture) return;
     setShowCreateModal(true);
   };
 
@@ -171,7 +177,7 @@ export default function ProjectsPage() {
         <section className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>Proyectos</h1>
           <p className={styles.pageSubtitle}>
-            Explora proyectos de innovación, investigación y desarrollo
+            Explora los emprendimientos de innovación, investigación y desarrollo
             tecnológico.
           </p>
         </section>
@@ -180,8 +186,8 @@ export default function ProjectsPage() {
           <div className={styles.statCard}>
             <div className={styles.statCardContent}>
               <div>
-                <p className={styles.statLabel}>Total Proyectos</p>
-                <p className={styles.statValue}>{projectStats.total}</p>
+                <p className={styles.statLabel}>Total Emprendimientos</p>
+                <p className={styles.statValue}>{ventureStats.total}</p>
               </div>
               <div className={`${styles.statIconBox} ${styles.statPrimary}`}>
                 <Briefcase size={24} />
@@ -192,9 +198,9 @@ export default function ProjectsPage() {
           <div className={styles.statCard}>
             <div className={styles.statCardContent}>
               <div>
-                <p className={styles.statLabel}>Iniciados</p>
+                <p className={styles.statLabel}>Idea</p>
                 <p className={`${styles.statValue} ${styles.greenText}`}>
-                  {projectStats.iniciados}
+                  {ventureStats.idea}
                 </p>
               </div>
               <div className={`${styles.statIconBox} ${styles.statGreen}`}>
@@ -206,13 +212,13 @@ export default function ProjectsPage() {
           <div className={styles.statCard}>
             <div className={styles.statCardContent}>
               <div>
-                <p className={styles.statLabel}>Finalizados</p>
-                <p className={`${styles.statValue} ${styles.blueText}`}>
-                  {projectStats.finalizados}
+                <p className={styles.statLabel}>Formalización</p>
+                <p className={`${styles.statValue} ${styles.yellowText}`}>
+                  {ventureStats.fromalizacion}
                 </p>
               </div>
-              <div className={`${styles.statIconBox} ${styles.statBlue}`}>
-                <CheckCircle2 size={24} />
+              <div className={`${styles.statIconBox} ${styles.statYellow}`}>
+                <Clock size={24} />
               </div>
             </div>
           </div>
@@ -220,13 +226,14 @@ export default function ProjectsPage() {
           <div className={styles.statCard}>
             <div className={styles.statCardContent}>
               <div>
-                <p className={styles.statLabel}>En Planeación</p>
-                <p className={`${styles.statValue} ${styles.yellowText}`}>
-                  {projectStats.planeacion}
+                <p className={styles.statLabel}>Operación</p>
+                <p className={`${styles.statValue} ${styles.blueText}`}>
+                  {ventureStats.operacion}
                 </p>
               </div>
-              <div className={`${styles.statIconBox} ${styles.statYellow}`}>
-                <Clock size={24} />
+              
+              <div className={`${styles.statIconBox} ${styles.statBlue}`}>
+                <CheckCircle2 size={24} />
               </div>
             </div>
           </div>
@@ -241,7 +248,7 @@ export default function ProjectsPage() {
 
               <input
                 type="text"
-                placeholder="Buscar proyectos..."
+                placeholder="Buscar emprendimientos..."
                 value={filters.search}
                 onChange={(e) =>
                   handleFilterChange("search", e.target.value)
@@ -263,14 +270,14 @@ export default function ProjectsPage() {
               )}
             </button>
 
-            {permissions.canCreateProject && (
+            {permissions.canCreateVenture && (
               <button
                 type="button"
                 onClick={openCreateModal}
                 className={styles.createButton}
               >
                 <Plus size={16} />
-                <span>Crear Proyecto</span>
+                <span>Crear Emprendimiento</span>
               </button>
             )}
           </div>
@@ -280,36 +287,16 @@ export default function ProjectsPage() {
               <div className={styles.filterField}>
                 <label className={styles.label}>Estado</label>
                 <select
-                  value={filters.estado}
+                  value={filters.venture_stage}
                   onChange={(e) =>
                     handleFilterChange(
                       "estado",
-                      e.target.value as ProjectStatus | "todos"
+                      e.target.value as VentureStage | "todos"
                     )
                   }
                   className={styles.select}
                 >
-                  {PROJECT_STATUS_FILTERS.map((option) => (
-                    <option key={String(option.value)} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className={styles.filterField}>
-                <label className={styles.label}>Modalidad</label>
-                <select
-                  value={filters.modalidad}
-                  onChange={(e) =>
-                    handleFilterChange(
-                      "modalidad",
-                      e.target.value as WorkModel | "todos"
-                    )
-                  }
-                  className={styles.select}
-                >
-                  {WORK_MODEL_FILTERS.map((option) => (
+                  {VENTURE_STAGE_FILTERS.map((option) => (
                     <option key={String(option.value)} value={option.value}>
                       {option.label}
                     </option>
@@ -322,14 +309,14 @@ export default function ProjectsPage() {
 
         <div className={styles.resultsCount}>
           <p>
-            Mostrando <span>{projects.length}</span> proyecto
+            Mostrando <span>{ventures.length}</span> emprendimientos
           </p>
         </div>
 
         {isLoading ? (
           <section className={styles.emptyState}>
             <div className={styles.emptyContent}>
-              <h3>Cargando proyectos...</h3>
+              <h3>Cargando emprendimientos...</h3>
             </div>
           </section>
         ) : error ? (
@@ -349,13 +336,13 @@ export default function ProjectsPage() {
               </button>
             </div>
           </section>
-        ) : projects.length > 0 ? (
+        ) : ventures.length > 0 ? (
           <section className={styles.projectsGrid}>
-            {projects.map((project) => (
+            {ventures.map((venture) => (
               <ProjectCard
                 key={project.id}
                 project={project}
-                isStudent={isStudent}
+                isStudent={isVenturer}
                 showFullCardInfo={permissions.showFullCardInfo}
               />
             ))}
@@ -385,7 +372,7 @@ export default function ProjectsPage() {
       </main>
 
       <ProjectModal
-        open={showCreateModal && permissions.canCreateProject}
+        open={showCreateModal && permissions.canCreateVenture}
         onClose={closeCreateModal}
         onSubmit={handleCreateProject}
         isSubmitting={isSubmitting}
