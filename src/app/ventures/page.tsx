@@ -5,9 +5,6 @@ import { Search, Filter, AlertCircle, Plus, Briefcase, TrendingUp, CheckCircle2,
 import styles from "./ventures.module.css";
 import Navbar from "../components/navbar/navbar";
 
-import { ProjectCard } from "../components/projects/card/projectCard";
-import { ProjectModal } from "../components/projects/modal/projectModal";
-
 import { VentureCard } from "../components/ventures/card/ventureCard";
 import { VentureModal } from "../components/ventures/modal/venturetModal";
 
@@ -122,7 +119,7 @@ export default function VenturesPage() {
       setIsSubmitting(true);
       setError(null);
 
-      const createdVenture = await createVenture(newVenture);
+      const createdVenture = await registerVenture(newVenture);
 
       setVentures((prev) => [createdVenture, ...prev]);
       closeCreateModal();
@@ -290,7 +287,7 @@ export default function VenturesPage() {
                   value={filters.venture_stage}
                   onChange={(e) =>
                     handleFilterChange(
-                      "estado",
+                      "venture_stage",
                       e.target.value as VentureStage | "todos"
                     )
                   }
@@ -339,10 +336,10 @@ export default function VenturesPage() {
         ) : ventures.length > 0 ? (
           <section className={styles.projectsGrid}>
             {ventures.map((venture) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                isStudent={isVenturer}
+              <VentureCard
+                key={venture.id}
+                venture={venture}
+                isVenturer={isVenturer}
                 showFullCardInfo={permissions.showFullCardInfo}
               />
             ))}
@@ -371,13 +368,13 @@ export default function VenturesPage() {
         )}
       </main>
 
-      <ProjectModal
+      <VentureModal
         open={showCreateModal && permissions.canCreateVenture}
         onClose={closeCreateModal}
         onSubmit={handleCreateProject}
         isSubmitting={isSubmitting}
-        newProject={newProject}
-        setNewProject={setNewProject}
+        newVenture={newVenture}
+        setNewVenture={setNewVenture}
       />
       
     </div>
