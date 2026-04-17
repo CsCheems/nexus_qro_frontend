@@ -6,21 +6,24 @@ import styles from "./ventures.module.css";
 import Navbar from "../components/navbar/navbar";
 
 import { VentureCard } from "../components/ventures/card/ventureCard";
-import { VentureModal } from "../components/ventures/modal/venturetModal";
 
-import type { Venture, VentureFilters, VenturePayload, VentureStage, ApiVentureFilters } from "@/types/ventures";
+import { VentureModal } from "../components/ventures/modal/ventureModal";
 
-import { WORK_MODEL_FILTERS } from "@/constants/project";
+import { type Venture, type VentureFilters, type VenturePayload, type VentureStage, type ApiVentureFilters, VentureDiagnosticoPayload } from "@/types/ventures";
 
 import { VENTURE_STAGE_FILTERS } from "@/constants/venture";
 
-import { initialVentureForm } from "@/constants/ventureForm"; 
+import { initialVentureForm, initialDiagnosticoForm } from "@/constants/ventureForm"; 
 import { getVenturePermissions, type UserRole } from "@/utils/venturePermissions";
-import { getVentures, registerVenture } from "@/services/ventureService";
+import { getVentures, registerVenture, createDiagnostic, calculateStage } from "@/services/ventureService";
+import { useToast } from "../components/toast/toast";
 
 import { useAuth } from "@/context/auth.context";
 
+
 export default function VenturesPage() {
+
+  const toast = useToast();
   
   const { user, loading } = useAuth();
   
@@ -33,21 +36,19 @@ export default function VenturesPage() {
 
   const [filters, setFilters] = useState<VentureFilters>({
     search: "",
-    venture_stage: "todos",
+    stage: "todos",
     requiere_financiamiento: false
   });
 
   const [showFilters, setShowFilters] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [newVenture, setNewVenture] = useState<VenturePayload>(initialVentureForm);
-
-  const [newProject, setNewProject] =
-    useState<VenturePayload>(initialVentureForm);
+  const [newVentureDiagnostic, setNewVentureDiagnostic] = useState<VentureDiagnosticoPayload>(initialDiagnosticoForm)
 
   const buildApiFilters = (currentFilters: VentureFilters): ApiVentureFilters => {
     return {
       search: currentFilters.search.trim() || undefined,
-      venture_stage: currentFilters.venture_stage !== "todos" ? currentFilters.venture_stage : undefined,
+      stage: currentFilters.stage !== "todos" ? currentFilters.stage : undefined,
       requiere_financiamiento: currentFilters.requiere_financiamiento
     };
   };
@@ -93,7 +94,7 @@ export default function VenturesPage() {
   const resetFilters = () => {
     setFilters({
       search: "",
-      venture_stage: "todos",
+      stage: "todos",
       requiere_financiamiento: false
     });
   };
@@ -102,7 +103,8 @@ export default function VenturesPage() {
 
   const closeCreateModal = () => {
     setShowCreateModal(false);
-    setNewProject(initialVentureForm);
+    setNewVenture(initialVentureForm);
+    setNewVentureDiagnostic(initialDiagnosticoForm);
   };
 
   const handleCreateProject = async (
@@ -110,8 +112,8 @@ export default function VenturesPage() {
   ) => {
     e.preventDefault();
 
-    if (newProject.fecha_fin && new Date(newProject.fecha_fin) < new Date(newProject.fecha_inicio)) {
-      alert("La fecha de fin no puede ser menor a la fecha de inicio.");
+    if (newVenture.fecha_fin && newVenture.fecha_inicio && new Date(newVenture.fecha_fin) < new Date(newVenture.fecha_inicio)) {
+      toast.error("La fecha de fin no puede ser menor a la fecha de inicio.");
       return;
     }
 
@@ -121,10 +123,17 @@ export default function VenturesPage() {
 
       const createdVenture = await registerVenture(newVenture);
 
-      setVentures((prev) => [createdVenture, ...prev]);
+      await createDiagnostic({
+        ...newVentureDiagnostic ,
+        venture_id: createdVenture.id
+      });
+
+      const updatedVenture = await calculateStage(createdVenture.id);
+      toast.success("Emprendimiento creado correctamente");
+      setVentures((prev) => [updatedVenture, ...prev]);
       closeCreateModal();
     } catch (err: any) {
-      alert(err.message || "No se pudo registrar el emprendimiento");
+      toast.error(err.message || "No se pudo registrar el emprendimiento");
     } finally {
       setIsSubmitting(false);
     }
@@ -133,14 +142,14 @@ export default function VenturesPage() {
   const ventureStats = useMemo(() => {
     return {
       total: ventures.length,
-      idea: ventures.filter((v) => v.venture_stage === "Idea").length,
-      fromalizacion: ventures.filter((v) => v.venture_stage === "Formalización").length,
-      operacion: ventures.filter((v) => v.venture_stage === "Operación").length,
+      idea: ventures.filter((v) => v.stage === "Idea").length,
+      fromalizacion: ventures.filter((v) => v.stage === "Formalización").length,
+      operacion: ventures.filter((v) => v.stage === "Operación").length,
     };
   }, [ventures]);
 
   const hasActiveFilters =
-    filters.venture_stage !== "todos" ||
+    filters.stage !== "todos" ||
     filters.requiere_financiamiento !== false ||
     filters.search.trim() !== "";
 
@@ -284,10 +293,10 @@ export default function VenturesPage() {
               <div className={styles.filterField}>
                 <label className={styles.label}>Estado</label>
                 <select
-                  value={filters.venture_stage}
+                  value={filters.stage}
                   onChange={(e) =>
                     handleFilterChange(
-                      "venture_stage",
+                      "stage",
                       e.target.value as VentureStage | "todos"
                     )
                   }
@@ -375,6 +384,8 @@ export default function VenturesPage() {
         isSubmitting={isSubmitting}
         newVenture={newVenture}
         setNewVenture={setNewVenture}
+        newVentureDiagnostic={newVentureDiagnostic}
+        setNewVentureDiagnostic={setNewVentureDiagnostic}
       />
       
     </div>

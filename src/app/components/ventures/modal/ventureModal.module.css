@@ -1,0 +1,110 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.modal {
+  width: 100%;
+  max-width: 48rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+  padding: 1.5rem;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.modalHeader h2 {
+  font-size: 1.35rem;
+  color: #2e2e2e;
+}
+
+.closeButton {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.7rem;
+  background: transparent;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: #f3f4f6;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field,
+.fieldFull {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #2e2e2e;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.85rem;
+  padding: 0.8rem 0.95rem;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.cancelButton {
+  padding: 0.8rem 1.1rem;
+  border-radius: 0.85rem;
+  background: #e5e7eb;
+}
+
+.submitButton {
+  padding: 0.8rem 1.1rem;
+  border-radius: 0.85rem;
+  color: #ffffff;
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+}

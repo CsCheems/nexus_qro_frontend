@@ -1,19 +1,26 @@
-import { VenturePayload } from "@/types/ventures";
+import { VenturePayload, VentureDiagnosticoPayload } from "@/types/ventures";
 
 export const initialVentureForm: VenturePayload = {
-    nombre: "",
-    descripcion: "",
-    problema_que_resuelve: "",
-    propuesta_valor: "",
-    sector: "",
-    industria: "",
-    mercado_objetivo: "",
-    venture_stage: "Idea",
-    requiere_financiammiento: false,
-    monto_estamidado: 0,
-    tiene_mvp: false,
-    tiene_ventas: false,
-    formalizado: false,
-    fecha_inicio: "",
-    fecha_fin: ""
-}
+  nombre: "",
+  descripcion: "",
+  problema_que_resuelve: "",
+  propuesta_valor: "",
+  sector: "",
+  industria: "",
+  pais: "",
+  fecha_inicio: "",
+  fecha_fin: "",
+};
+
+export const initialDiagnosticoForm: VentureDiagnosticoPayload = {
+  tamano_equipo: undefined,
+  tiene_ventas: false,
+  tiene_mvp: false,
+  formalizado: false,
+  tipo_cliente_objetivo: "",
+  alcance_geografico: "",
+  validacion_clientes: "",
+  sitio_web_url: "",
+  requiere_financiamiento: false,
+  monto_estimado_financiamiento: undefined,
+};
