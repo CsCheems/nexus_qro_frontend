@@ -23,7 +23,7 @@ interface VentureCardProps {
     showFullCardInfo: boolean;
 }
 
-export default function VentureCard({
+export function VentureCard({
     venture,
     isVenturer,
     showFullCardInfo
@@ -54,6 +54,8 @@ export default function VentureCard({
         }
     };
 
+    console.log("VENTURE CARD:", venture);
+
     return(
          <article className={styles.projectCard}>
       <div className={styles.cardHeader}>
@@ -61,11 +63,11 @@ export default function VentureCard({
           <div className={styles.cardHeaderLeft}>
             <span
               className={`${styles.statusBadge} ${getStageClass(
-                venture.venture_stage
+                venture.stage
               )}`}
             >
-              {getStageIcon(venture.venture_stage)}
-              <span>{venture.venture_stage}</span>
+              {getStageIcon(venture.stage)}
+              <span>{venture.stage}</span>
             </span>
           </div>
         </div>
@@ -96,7 +98,7 @@ export default function VentureCard({
           <div className={styles.metaItem}>
             <HandCoins size={16} />
             <span>
-              {venture.requiere_financiammiento
+              {venture.requiere_financiamiento
                 ? "Si requiere financionamiento"
                 : "No requiere finaciamiento"}
             </span>

@@ -21,6 +21,7 @@ const menuByRole: Record<UserRole, MenuItem[]> = {
   consultor: [
     { label: "Perfil", href: "/profile" },
     { label: "Proyectos", href: "/projects" },
+    { label: "Emprendimientos", href: "/ventures" },
     { label: "Notificaciones", href: "/notifications" }
   ],
   estudiante: [

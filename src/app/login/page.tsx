@@ -82,7 +82,8 @@ export default function Auth() {
       password: registerPassword
     }
     try{
-      const res = await register(userData);
+      await register(userData);
+      setIsRegisterMode(false);
       toast.success("Cuenta registrada correctamente");
     }catch(error: any){
       toast.error(error.message || "Error al registrar usuario");
