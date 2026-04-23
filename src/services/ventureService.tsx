@@ -1,6 +1,7 @@
 import api from "./api";
 
-import type { VenturePayload, Venture, ApiVentureFilters, VentureDiagnosticoGeneral, VentureDiagnosticoPayload } from "@/types/ventures";
+import type { VenturePayload, Venture, ApiVentureFilters, VentureDiagnosticoGeneral, VentureDiagnosticoPayload, VentureDetalleApiResponse, VentureDiagnosticResponse } from "@/types/ventures";
+import type { RoadmapResponse } from "@/types/roadmap";
 
 export const getVentures = async (filters?: ApiVentureFilters): Promise<Venture[]> => {
     try{
@@ -70,14 +71,14 @@ export const calculateStage = async (ventureId: number): Promise<Venture> => {
     }
 };
 
-export const getVentureById = async (id: string) => {
+export const getVentureById = async (id: string): Promise<VentureDetalleApiResponse> => {
     try{
         const { data } = await api.get(`/ventures/${id}`);
         return data;
     }catch(error:any){
          if(error.response){
             throw new Error(
-                error.response.data.message || "Error al registrar emprendimiento"
+                error.response.data.message || "Error al obtener emprendimiento"
             );
         }else if(error.request){
             throw new Error("Error, no se recibió respuesta del servidor");
@@ -86,4 +87,40 @@ export const getVentureById = async (id: string) => {
         }
     } 
 };
+
+export const getVentureDiagnostic = async (id: string): Promise<VentureDiagnosticResponse> => {
+    try{
+        const { data } = await api.get(`/ventures/diagnostic/${id}`);
+        return data;
+    }catch(error: any){
+        if(error.response){
+            throw new Error(
+                error.response.data.message || "Error al obtener diagnostico"
+            );
+        }else if(error.request){
+            throw new Error("Error, no se recibió respuesta del servidor");
+        }else{
+            throw new Error("Error en el servidor");
+        }
+    }
+}
+
+export const getRoadmap = async (ventureId: string): Promise<RoadmapResponse> => {
+  try{
+        const { data } = await api.get(`/ventures/${ventureId}/roadmap`);
+        return data;
+    }catch(error: any){
+        if(error.response){
+            throw new Error(
+                error.response.data.message || "Error al obtener roadmap"
+            );
+        }else if(error.request){
+            throw new Error("Error, no se recibió respuesta del servidor");
+        }else{
+            throw new Error("Error en el servidor");
+        }
+    }
+}
+
+
 

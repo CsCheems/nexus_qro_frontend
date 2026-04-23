@@ -1,0 +1,149 @@
+.container {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.percentage {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.progressBar {
+  margin-bottom: 24px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  border-radius: 999px;
+  transition: width 0.4s ease; 
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f8fafc; 
+  border: none; 
+}
+
+.taskText {
+  font-size: 14px;
+  color: #334155;
+}
+
+.textCompleted {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.completed {
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.inProgress {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.pending {
+  background: #f1f5f9; 
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.iconCompleted {
+  color: #16a34a;
+}
+
+.iconInProgress {
+  color: #ca8a04;
+}
+
+.iconPending {
+  color: #9ca3af;
+}
+
+.detailButton {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid #d0d5dd;
+  background-color: #2563eb;
+  color: white;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detailButton:hover {
+  background-color: #1d4ed8;
+  border-color: #98a2b3;
+}
+
+.detailButton:active {
+  transform: scale(0.97);
+}
+
+.completeButton {
+  width: 100px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.completeButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+}
+
+.completeButton:active {
+  transform: scale(0.97);
+}
+
+.completeButton:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}

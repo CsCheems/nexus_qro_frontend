@@ -1,0 +1,86 @@
+.container {
+  margin-top: 20px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2e2e2e;
+  margin-bottom: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  color: #8892b0;
+}
+
+.field div {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.servicesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.serviceTag {
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  color: white;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.empty {
+  font-size: 12px;
+  color: #8892b0;
+}
+
+.servicesSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.serviceOption {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.activeService {
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  color: white;
+  border: none;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+

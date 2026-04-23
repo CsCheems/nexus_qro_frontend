@@ -29,6 +29,7 @@ export interface CreateProjectPayload {
     beneficios?: string;
     contacto_email: string;
     contacto_telefono: string;
+    venture_id: number;
 }
 
 export interface ProjectFilters {
@@ -41,4 +42,12 @@ export interface ApiProjectFilters {
   search?: string;
   estado?: ProjectStatus;
   modalidad?: WorkModel;
+}
+
+export interface VentureProjectSummary {
+  id: number;
+  nombre_proyecto: string;
+  descripcion?: string;
+  estado?: ProjectStatus;
+  fecha_inicio?: string;
 }

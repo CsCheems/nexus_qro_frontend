@@ -1,4 +1,4 @@
-export type UserRole = "estudiante" | "consultor" | "administrador";
+export type UserRole = "estudiante" | "consultor" | "administrador" | "emprendedor";
 
 export interface ProjectPermissions {
     canCreateProject: boolean;
@@ -25,7 +25,13 @@ export const projectPermissions: Record<UserRole, ProjectPermissions> = {
         canApplyToProject: false,
         showFullCardInfo: true,
         showContactInfo: true,
-    }
+    },
+    emprendedor: {
+        canCreateProject: true,
+        canApplyToProject: false,
+        showFullCardInfo: true,
+        showContactInfo: true,
+    },
 };
 
 export function getProjectPermissions(role: UserRole): ProjectPermissions {

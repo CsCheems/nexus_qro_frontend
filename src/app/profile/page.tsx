@@ -5,6 +5,12 @@ import { User, Mail, Building2, Edit, Save, X, Phone } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { profileFieldsByRole, UserRole } from "@/constants/profiles";
+import { AdditionalInfo } from "../components/profiles/additionalInfo/additionalInfo";
+import { EditableAdditionalInfo } from "../components/profiles/editableAdditionalInfo/editableAdditionalInfo";
+import { ConsultorProfile, FormDataType, UpdateProfilePayload } from "@/types/profiles";
+import { getServices } from "../../services/consultantService";
+import {  useToast } from "../components/toast/toast";
+import { updateProfile } from "@/services/usersService";
 
 import styles from "./profile.module.css";
 
@@ -12,11 +18,14 @@ import { getMe } from "@/services/authService";
 import Navbar from "../components/navbar/navbar";
 
 export default function Profile() {
+    const toast = useToast();
     const [isEditing, setIsEditing] = useState(false);
     const [isEditingPassword, setIsEditingPassword] = useState(false);
-
+    const [formData, setFormData] = useState<any>({});
+    const [services, setServices] = useState<{id: number, nombre: string}[]>();
+    const [profile, setProfile] = useState<FormDataType | null>(null);
     const [user, setUser] = useState<any>(null);
-    const [editForm, setEditForm] = useState({...user});
+    const [editForm, setEditForm] = useState<any>(null);
     const [passwordFields, setPasswordFields] = useState({
         passwordActual: "",
         nuevaPassword: "",
@@ -34,15 +43,51 @@ export default function Profile() {
                 passwordActual: "",
                 nuevaPassword: "",
                 confirmarPassword: "",
-            }); // Reset password fields if cancelling
+            });
         }
         setIsEditingPassword(!isEditingPassword);
     };
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Guardar cambios:", editForm);
-        setIsEditing(false);
+        
+        if(!user || !formData) return;
+
+        try{
+            const payload: UpdateProfilePayload = {
+                usuario: {
+                    nombres: user.nombres,
+                    apellido_paterno: user.apellido_paterno,
+                    apellido_materno: user.apellido_materno,
+                    email: user.email,
+                    telefono: user.telefono,
+                },
+                perfil: 
+                    user.rol === "consultor"
+                        ?{
+                            ...(formData as ConsultorProfile),
+                            servicios: (formData as ConsultorProfile).serviciosIds || [],
+                        }
+                        : formData,
+            };
+
+            await updateProfile(payload);
+
+            const data = await getMe();
+
+            const userData = data.usuario.usuario;
+
+            if(userData){
+                setUser(userData);
+                setProfile(userData.perfil);
+            }
+            toast.success("Información actualizada");
+            setIsEditing(false);
+        }catch(error: any){
+            toast.error("Error al actualiza tu información");
+        }
+
+        
     };   
 
     const handlePasswordSave = (e: React.FormEvent) => {
@@ -55,19 +100,55 @@ export default function Profile() {
     useEffect(() => {
         const obtenerUsuario = async () => {
             const data = await getMe();
-            if(data?.usuario){
-                setUser(data.usuario);
-                setEditForm(data);
-            }else{
+            if (data?.usuario?.usuario) {
+                const userData = data.usuario.usuario;
+                setUser(userData);
+                setProfile(userData.perfil ?? null);
+                setEditForm({
+                    usuario: userData,
+                    perfil: userData.perfil ?? null
+                });
+                
+            } else {
                 setUser(null);
+                setProfile(null);
+                setEditForm(null);
             }
         };
         obtenerUsuario();
     }, []);
 
+    useEffect(() => {
+        if (!profile || !user) return;
+
+        if (user.rol === "consultor"  && "servicios" in profile) {
+            const consultor = profile as ConsultorProfile;
+            setFormData({
+            ...consultor,
+            serviciosIds: consultor.servicios?.map((s) => s.id) || [],
+            });
+        } else {
+            setFormData(profile);
+        }
+    }, [profile, user]);
+
+    useEffect(() => {
+        if (!user || user.rol !== "consultor") return;
+        const fetchServices = async () => {
+            try {
+                const data = await getServices();
+                setServices(data);
+            } catch (err) {
+                console.error("Error cargando servicios", err);
+            }
+        };
+
+        fetchServices();
+    }, [user]);
+
     const getInitials = () => {
         if(!user) return "";
-        return `${user.usuario.nombres?.[0] || ""}${user.usuario.apellido_paterno?.[0] || ""}`;
+        return `${user.nombres?.[0] || ""}${user.apellido_paterno?.[0] || ""}`;
     };
 
     const formatMonthYear = (dateString: string) => {
@@ -83,8 +164,7 @@ export default function Profile() {
         return <p>Cargando...</p>;
     }
 
-    const role = user?.usuario?.rol as UserRole;
-    const camposAdicionales = profileFieldsByRole[role] || [];
+    const role = user?.rol as UserRole;
 
     return (
             <div className={styles.container}>
@@ -110,18 +190,18 @@ export default function Profile() {
                                 </div>
 
                                 <h2 className={styles.userName}>
-                                    {user.usuario.nombres} {user.usuario.apellido_paterno} {user.usuario.apellido_materno}
+                                    {user.nombres} {user.apellido_paterno} {user.apellido_materno}
                                 </h2>
-                                <p className={styles.role}>{user.usuario.rol}</p>
+                                <p className={styles.role}>{user.rol}</p>
 
                                 <div className={styles.meta}>
                                     <div>
                                         <span>Miembro desde</span>
-                                        <strong>{formatMonthYear(user.usuario.fecha_registro)}</strong>
+                                        <strong>{formatMonthYear(user.fecha_registro)}</strong>
                                     </div>
                                     <div>
                                         <span>Estado</span>
-                                        <strong className={styles.active}>{user.usuario.estado}</strong>
+                                        <strong className={styles.active}>{user.estado}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +236,7 @@ export default function Profile() {
                                                 <label>Nombre</label>
                                                 <div>
                                                     <User size={18} />
-                                                    {user.usuario.nombres}
+                                                    {user.nombres}
                                                 </div>
                                             </div>
 
@@ -164,7 +244,7 @@ export default function Profile() {
                                                 <label>Apellido Paterno</label>
                                                 <div>
                                                     <User size={18} />
-                                                    {user.usuario.apellido_paterno}
+                                                    {user.apellido_paterno}
                                                 </div>
                                             </div>
 
@@ -172,7 +252,7 @@ export default function Profile() {
                                                 <label>Apellido Materno</label>
                                                 <div>
                                                     <User size={18} />
-                                                    {user.usuario.apellido_materno}
+                                                    {user.apellido_materno}
                                                 </div>
                                             </div>
 
@@ -180,7 +260,7 @@ export default function Profile() {
                                                 <label>Email</label>
                                                 <div>
                                                     <Mail size={18} />
-                                                    {user.usuario.email}
+                                                    {user.email}
                                                 </div>
                                             </div>
 
@@ -188,7 +268,7 @@ export default function Profile() {
                                                 <label>Teléfono</label>
                                                 <div>
                                                     <Phone size={18} />
-                                                    {user.usuario.telefono}
+                                                    {user.telefono}
                                                 </div>
                                             </div>
 
@@ -196,7 +276,7 @@ export default function Profile() {
                                                 <label>Tipo</label>
                                                 <div>
                                                     <Building2 size={18} />
-                                                    {user.usuario.rol}
+                                                    {user.rol}
                                                 </div>
                                             </div>
                                         </div>
@@ -205,18 +285,7 @@ export default function Profile() {
 
                                         <h3 className={styles.sectionTitle}>Información Adicional</h3>
 
-                                        <div className={styles.infoGrid}>
-                                            {camposAdicionales.length > 0 && user.perfil ? (
-                                                camposAdicionales.map((campo: any) => (
-                                                    <div key={campo.key} className={styles.field}>
-                                                        <label>{campo.label}</label>
-                                                        <div>{user.perfil[campo.key] || "No especificado"}</div>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <p>No hay informacion adicional para este perfil</p>
-                                            )}
-                                        </div>
+                                        <AdditionalInfo role={user.rol} data={user.perfil} />
                                     </>
                                 ) : (
                                     <form onSubmit={handleSave} className={styles.form}>
@@ -225,7 +294,7 @@ export default function Profile() {
                                                 <label>Nombre</label>
                                                 <input
                                                     className={styles.input}
-                                                    value={editForm.usuario?.nombres || ""}
+                                                    value={editForm.nombres || ""}
                                                     onChange={(e) =>
                                                         setEditForm({
                                                             ...editForm,
@@ -242,7 +311,7 @@ export default function Profile() {
                                                 <label>Apellido Paterno</label>
                                                 <input
                                                     className={styles.input}
-                                                    value={editForm.usuario?.apellido_paterno || ""}
+                                                    value={editForm.apellido_paterno || ""}
                                                     onChange={(e) =>
                                                         setEditForm({
                                                             ...editForm,
@@ -259,7 +328,7 @@ export default function Profile() {
                                                 <label>Apellido Materno</label>
                                                 <input
                                                     className={styles.input}
-                                                    value={editForm.usuario?.apellido_materno || ""}
+                                                    value={editForm.apellido_materno || ""}
                                                     onChange={(e) =>
                                                         setEditForm({
                                                             ...editForm,
@@ -276,7 +345,7 @@ export default function Profile() {
                                                 <label>Email</label>
                                                 <input
                                                     className={styles.input}
-                                                    value={editForm.usuario?.email || ""}
+                                                    value={editForm.email || ""}
                                                     onChange={(e) =>
                                                         setEditForm({
                                                             ...editForm,
@@ -293,7 +362,7 @@ export default function Profile() {
                                                 <label>Teléfono</label>
                                                 <PhoneInput
                                                     className={styles.input}
-                                                    value={editForm.usuario?.telefono || ""}
+                                                    value={editForm.telefono || ""}
                                                     onChange={(value) =>
                                                         setEditForm({
                                                             ...editForm,
@@ -312,100 +381,16 @@ export default function Profile() {
 
                                         <h3 className={styles.sectionTitle}>Información Adicional</h3>
 
-                                        <div className={styles.infoGrid}>
-                                            {editForm.usuario?.rol === "estudiante" && (
-                                                <>
-                                                    <div className={styles.field}>
-                                                        <label>Universidad</label>
-                                                        <input
-                                                            className={styles.input}
-                                                            value={editForm.perfil?.universidad || ""}
-                                                            onChange={(e) =>
-                                                                setEditForm({
-                                                                    ...editForm,
-                                                                    perfil: {
-                                                                        ...editForm.perfil,
-                                                                        universidad: e.target.value,
-                                                                    },
-                                                                })
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className={styles.field}>
-                                                        <label>División</label>
-                                                        <input
-                                                            className={styles.input}
-                                                            value={editForm.perfil?.division || ""}
-                                                            onChange={(e) =>
-                                                                setEditForm({
-                                                                    ...editForm,
-                                                                    perfil: {
-                                                                        ...editForm.perfil,
-                                                                        division: e.target.value,
-                                                                    },
-                                                                })
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className={styles.field}>
-                                                        <label>Programa</label>
-                                                        <input
-                                                            className={styles.input}
-                                                            value={editForm.perfil?.programa || ""}
-                                                            onChange={(e) =>
-                                                                setEditForm({
-                                                                    ...editForm,
-                                                                    perfil: {
-                                                                        ...editForm.perfil,
-                                                                        programa: e.target.value,
-                                                                    },
-                                                                })
-                                                            }
-                                                        />
-                                                    </div>
-                                                </>
-                                            )}
-
-                                            {editForm.usuario?.rol === "consultor" && (
-                                                <>
-                                                    <div className={styles.field}>
-                                                        <label>Empresa</label>
-                                                        <input
-                                                            className={styles.input}
-                                                            value={editForm.perfil?.empresa || ""}
-                                                            onChange={(e) =>
-                                                                setEditForm({
-                                                                    ...editForm,
-                                                                    perfil: {
-                                                                        ...editForm.perfil,
-                                                                        empresa: e.target.value,
-                                                                    },
-                                                                })
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className={styles.field}>
-                                                        <label>Puesto</label>
-                                                        <input
-                                                            className={styles.input}
-                                                            value={editForm.perfil?.puesto || ""}
-                                                            onChange={(e) =>
-                                                                setEditForm({
-                                                                    ...editForm,
-                                                                    perfil: {
-                                                                        ...editForm.perfil,
-                                                                        puesto: e.target.value,
-                                                                    },
-                                                                })
-                                                            }
-                                                        />
-                                                    </div>
-                                                </>
-                                            )}
-                                        </div>
+                                        {isEditing ? (
+                                            <EditableAdditionalInfo
+                                                role={user.rol}
+                                                formData={formData}
+                                                setFormData={setFormData}
+                                                servicesCatalog={services}
+                                            />
+                                            ) : (
+                                            <AdditionalInfo role={user.rol} data={user.perfil} />
+                                        )}
 
                                         <div className={styles.actions}>
                                             <button type="button" onClick={handleEditToggle}>

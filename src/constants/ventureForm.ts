@@ -13,14 +13,14 @@ export const initialVentureForm: VenturePayload = {
 };
 
 export const initialDiagnosticoForm: VentureDiagnosticoPayload = {
-  tamano_equipo: undefined,
+  tamano_equipo: null,
   tiene_ventas: false,
   tiene_mvp: false,
   formalizado: false,
   tipo_cliente_objetivo: "",
   alcance_geografico: "",
-  validacion_clientes: "",
+  validacion_clientes: null,
   sitio_web_url: "",
   requiere_financiamiento: false,
-  monto_estimado_financiamiento: undefined,
+  monto_estimado_financiamiento: null,
 };

@@ -1,10 +1,15 @@
-export function formatDate(date: string) {
-    if (!date) return "";
-    return new Date(date).toLocaleDateString("es-MX", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-    });
+export function formatDate(date?: string | null) {
+  if (!date) return "No disponible";
+
+  const parsed = new Date(date);
+
+  if (Number.isNaN(parsed.getTime())) return date;
+
+  return parsed.toLocaleDateString("es-MX", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export function truncateText(text: string, maxLength = 120) {

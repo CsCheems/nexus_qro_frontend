@@ -1,0 +1,123 @@
+.container {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+}
+
+/* ===== Header ===== */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2e2e2e;
+}
+
+/* ===== Buttons ===== */
+
+.primaryButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  color: white;
+}
+
+.primaryButton:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== List ===== */
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== Empty state ===== */
+
+.emptyState {
+  text-align: center;
+  padding: 48px 0;
+}
+
+.emptyText {
+  color: #8892b0;
+  margin-bottom: 16px;
+}
+
+.emptyButton {
+  border: 1px solid #2562ea;
+  color: #2562ea;
+}
+
+.emptyButton:hover {
+  background: rgba(37, 98, 234, 0.05);
+}
+
+/* ===== BUTTON BASE ===== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ===== PRIMARY ===== */
+.primaryButton {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+}
+
+.primaryButton:hover {
+  background-color: #1d4ed8;
+}
+
+/* ===== OUTLINE ===== */
+.outlineButton {
+  background-color: transparent;
+  border: 1px solid #cbd5f5;
+  color: #1e293b;
+}
+
+.outlineButton:hover {
+  background-color: #f8fafc;
+}
+
+/* ===== ICON ===== */
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== EMPTY STATE ===== */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  gap: 12px;
+}
+
+.emptyText {
+  color: #64748b;
+  font-size: 14px;
+}

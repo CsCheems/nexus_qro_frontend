@@ -107,11 +107,7 @@ export default function VenturesPage() {
     setNewVentureDiagnostic(initialDiagnosticoForm);
   };
 
-  const handleCreateProject = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-
+  const handleCreateProject = async () => {
     if (newVenture.fecha_fin && newVenture.fecha_inicio && new Date(newVenture.fecha_fin) < new Date(newVenture.fecha_inicio)) {
       toast.error("La fecha de fin no puede ser menor a la fecha de inicio.");
       return;
@@ -123,9 +119,21 @@ export default function VenturesPage() {
 
       const createdVenture = await registerVenture(newVenture);
 
+      console.log("VENTURE CREADO: ", createdVenture);
+
       await createDiagnostic({
         ...newVentureDiagnostic ,
-        venture_id: createdVenture.id
+        venture_id: createdVenture.id,
+
+        tamano_equipo:
+          newVentureDiagnostic.tamano_equipo !== null
+            ? Number(newVentureDiagnostic.tamano_equipo)
+            : null,
+
+        monto_estimado_financiamiento:
+          newVentureDiagnostic.requiere_financiamiento
+            ? Number(newVentureDiagnostic.monto_estimado_financiamiento)
+            : null
       });
 
       const updatedVenture = await calculateStage(createdVenture.id);
@@ -181,7 +189,7 @@ export default function VenturesPage() {
 
       <main className={styles.main}>
         <section className={styles.pageHeader}>
-          <h1 className={styles.pageTitle}>Proyectos</h1>
+          <h1 className={styles.pageTitle}>Emprendimientos</h1>
           <p className={styles.pageSubtitle}>
             Explora los emprendimientos de innovación, investigación y desarrollo
             tecnológico.
@@ -360,7 +368,7 @@ export default function VenturesPage() {
                 <AlertCircle size={32} />
               </div>
 
-              <h3>No se encontraron proyectos</h3>
+              <h3>No se encontraron emprendimientos</h3>
               <p>
                 Intenta ajustar los filtros o términos de búsqueda.
               </p>
@@ -387,7 +395,6 @@ export default function VenturesPage() {
         newVentureDiagnostic={newVentureDiagnostic}
         setNewVentureDiagnostic={setNewVentureDiagnostic}
       />
-      
     </div>
   );
 }

@@ -1,0 +1,167 @@
+.dialog {
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ===== Form ===== */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== Inputs ===== */
+
+.textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+/* ===== Submit ===== */
+
+.submit {
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  color: white;
+}
+
+.submit:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* ===== DIALOG ===== */
+.dialog {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.2s ease;
+}
+
+/* ===== HEADER ===== */
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.description {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+/* ===== FORM ===== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+/* ===== TEXTAREA ===== */
+.textarea {
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 90px;
+  transition: border 0.2s;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* ===== BUTTONS ===== */
+.button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Cancel */
+.cancelButton {
+  background: transparent;
+  border: 1px solid #cbd5f5;
+  color: #1e293b;
+}
+
+.cancelButton:hover {
+  background: #f8fafc;
+}
+
+/* Submit */
+.submitButton {
+  background: #2563eb;
+  color: white;
+  border: none;
+}
+
+.submitButton:hover {
+  background: #1d4ed8;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

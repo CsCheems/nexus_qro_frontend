@@ -14,7 +14,7 @@ const countries = getNames().sort();
 interface Props {
   open: boolean;
   onClose: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: () => void;
   isSubmitting: boolean;
   newVenture: VenturePayload;
   setNewVenture: React.Dispatch<React.SetStateAction<VenturePayload>>;
@@ -65,7 +65,7 @@ export function VentureModal({
 
       case 3:
         if (
-          newVentureDiagnostic.tamano_equipo === undefined ||
+          newVentureDiagnostic.tamano_equipo === null ||
           newVentureDiagnostic.tamano_equipo < 1 ||
           !newVentureDiagnostic.tipo_cliente_objetivo.trim() ||
           !newVentureDiagnostic.alcance_geografico ||
@@ -126,11 +126,7 @@ export function VentureModal({
           </button>
         </div>
 
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          if (!validateStep()) return;
-          onSubmit(e);
-        }} className={styles.modalForm}>
+        <form onSubmit={(e) => e.preventDefault()} className={styles.modalForm}>
           <div className={styles.formGrid}>
 
             {step === 1 && (
@@ -297,7 +293,7 @@ export function VentureModal({
                     onChange={(e) =>
                       setNewVentureDiagnostic(prev => ({
                         ...prev,
-                        tamano_equipo: e.target.value === "" ? undefined : Number(e.target.value),
+                        tamano_equipo: e.target.value === "" ? null : Number(e.target.value),
                       }))
                     }
                   />
@@ -335,12 +331,14 @@ export function VentureModal({
 
                 <div className={styles.field}>
                   <label>Validación de clientes</label>
-                  <select
-                    value={newVentureDiagnostic.validacion_clientes}
+                 <select
+                    value={newVentureDiagnostic.validacion_clientes ?? ""}
                     onChange={(e) =>
                       setNewVentureDiagnostic(prev => ({
                         ...prev,
-                        validacion_clientes: e.target.value as ValidacionClientes
+                        validacion_clientes: e.target.value === ""
+                          ? null
+                          : (e.target.value as ValidacionClientes)
                       }))
                     }
                   >
@@ -451,7 +449,7 @@ export function VentureModal({
                         setNewVentureDiagnostic(prev => ({
                           ...prev,
                           monto_estimado_financiamiento:
-                            e.target.value === "" ? undefined : Number(e.target.value)
+                            e.target.value === "" ? null : Number(e.target.value)
                         }))
                       }
                     />
@@ -473,8 +471,15 @@ export function VentureModal({
                 Siguiente
               </button>
             ) : (
-              <button type="submit" disabled={isSubmitting}  className={styles.submitButton}>
-                {isSubmitting ? "Creando..." : "Registrar Emprendimiento"}
+              <button
+                type="button"
+                onClick={() => {
+                  if (!validateStep()) return;
+                  onSubmit();
+                }}
+                className={styles.submitButton}
+              >
+                Registrar Emprendimiento
               </button>
             )}
           </div>

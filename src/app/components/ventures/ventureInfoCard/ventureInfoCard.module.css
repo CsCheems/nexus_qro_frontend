@@ -1,0 +1,88 @@
+.container {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+}
+
+/* ===== Header ===== */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2e2e2e;
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== Content ===== */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sectionIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  color: #2e2e2e;
+}
+
+.sectionText {
+  font-size: 14px;
+  color: #8892b0;
+  padding-left: 26px;
+  line-height: 1.6;
+}
+
+/* ===== Colors ===== */
+
+.problem {
+  color: #dc2626;
+}
+
+.solution {
+  color: #ca8a04;
+}
+
+.business {
+  color: #16a34a;
+}
+
+.market {
+  color: #2563eb;
+}
+
