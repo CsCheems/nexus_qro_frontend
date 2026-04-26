@@ -187,6 +187,32 @@
   transform: scale(0.98);
 }
 
+.consultantsSection {
+  margin-top: 12px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.consultantsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.loading {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.empty {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
 /* ===== ANIMATION ===== */
 @keyframes fadeIn {
   from {

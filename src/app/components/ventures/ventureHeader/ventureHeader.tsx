@@ -18,7 +18,7 @@ const stageConfig: Record<
   VentureStage,
   { label: string; className: string }
 > = {
-  Idea: {
+  "Idea": {
     label: "Idea",
     className: styles.stageIdea,
   },

@@ -1,12 +1,13 @@
 import styles from "./consultingRequestCard.module.css";
 
 import { MessageSquare, Calendar, Clock } from "lucide-react";
+import { ConsultingRequestStatus } from "@/types/ventures";
 
 interface ConsultingRequest {
   id: string;
   type: string;
   description: string;
-  status: "pending" | "scheduled" | "completed";
+  status: ConsultingRequestStatus;
   date: string;
   consultant?: string;
 }
@@ -16,15 +17,15 @@ interface ConsultingRequestCardProps {
 }
 
 const statusConfig = {
-  pending: {
+  pendiente: {
     label: "Pendiente",
     className: styles.pending,
   },
-  scheduled: {
-    label: "Programada",
+  agendada: {
+    label: "Agendada",
     className: styles.scheduled,
   },
-  completed: {
+  completada: {
     label: "Completada",
     className: styles.completed,
   },

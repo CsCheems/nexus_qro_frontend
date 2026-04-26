@@ -1,0 +1,50 @@
+.card {
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e7ebf3;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(27, 39, 94, 0.06);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: #1f2430;
+}
+
+.sectionTitle h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #2562ea;
+}
+
+.contactLabel {
+  margin: 0 0 4px;
+  font-size: 0.83rem;
+  color: #7b879c;
+}
+
+.contactValue {
+  color: #1f2430;
+  text-decoration: none;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.contactValue:hover {
+  color: #2562ea;
+}

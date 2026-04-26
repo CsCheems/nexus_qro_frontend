@@ -1,6 +1,9 @@
+"use client"
+
 import { VentureProjectSummary } from "@/types/projects";
 import styles from "./projectsList.module.css";
 import { formatDate } from "@/utils/projectFormat";
+import { useRouter } from "next/navigation";
 
 
 interface Props {
@@ -8,6 +11,7 @@ interface Props {
 }
 
 export function ProjectList({ projects }: Props) {
+  const router = useRouter();
   if (!projects || projects.length === 0) {
     return (
       <div className={styles.empty}>
@@ -45,6 +49,15 @@ export function ProjectList({ projects }: Props) {
                     {project.estado}
                 </span>
                 )}
+
+                <div className={styles.actions}>
+                  <button
+                    className={styles.detailButton}
+                    onClick={() => router.push(`/projects/${project.id}`)}
+                  >
+                    Ver detalle
+                  </button>
+                </div>
             </div>
             ))}
         </div>

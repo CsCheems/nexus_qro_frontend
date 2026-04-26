@@ -1,6 +1,6 @@
 import api from "./api";
 
-import type { CreateProjectPayload, Project, ApiProjectFilters } from "@/types/projects";
+import type { CreateProjectPayload, Project, ApiProjectFilters, ProjectDetalleApiResponse } from "@/types/projects";
 
 
 export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[]> => {
@@ -20,6 +20,24 @@ export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[
         }
     }
 };
+
+export const getProjectById = async (id: string): Promise<ProjectDetalleApiResponse> => {
+    try{
+        const { data } = await api.get(`/projects/${id}`);
+        return data;
+    }catch(error: any){
+        if(error.response){
+            throw new Error(
+                error.response.data.message || "Error al obtener proyecto"
+            );
+        }else if(error.request){
+            throw new Error("Error, no se recibió respuesta del servidor");
+        }else{
+            throw new Error("Error en el servidor");
+        }
+    }
+}
+
 
 export const createProject = async (
     projectData: CreateProjectPayload

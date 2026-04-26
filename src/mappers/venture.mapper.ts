@@ -27,7 +27,7 @@ export function mapVentureFromApi(venture: VentureDetailResponse, diagnostic?: V
   ];
 
   const STAGE_DESCRIPTIONS: Record<VentureStage, string> = {
-    Idea: "Ideación y validación inicial del concepto",
+    "Idea": "Ideación y validación inicial del concepto",
     "Validación": "Validar interés real del mercado",
     "Modelo de Negocio": "Definir cómo genera valor",
     "Formalización": "Estructura legal y fiscal",
@@ -111,13 +111,13 @@ export function mapVentureFromApi(venture: VentureDetailResponse, diagnostic?: V
       })) ?? [],
 
     projects:
-    venture.proyectos?.map((p): VentureProjectSummary => ({
-      id: Number(p.id),
-      nombre_proyecto: p.nombre_proyecto ?? "Sin nombre",
-      descripcion: p.descripcion ?? "",
-      estado: p.estado as ProjectStatus,
-      fecha_inicio: p.fecha_inicio ?? "",
-    })) ?? [],
+      venture.proyectos?.map((p): VentureProjectSummary => ({
+        id: Number(p.id),
+        nombre_proyecto: p.nombre_proyecto ?? "Sin nombre",
+        descripcion: p.descripcion ?? "",
+        estado: p.estado as ProjectStatus,
+        fecha_inicio: p.fecha_inicio ?? "",
+      })) ?? [],
 
     summary: {
       industry: venture.industria || "No definida",

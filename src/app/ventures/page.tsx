@@ -53,7 +53,7 @@ export default function VenturesPage() {
     };
   };
 
-  const handleGetProjects = async (currentFilters: VentureFilters = filters) => {
+  const handleGetVentures = async (currentFilters: VentureFilters = filters) => {
     try {
       setIsLoading(true);
       setError(null);
@@ -70,7 +70,7 @@ export default function VenturesPage() {
   };
 
   useEffect(() => {
-    handleGetProjects(filters);
+    handleGetVentures(filters);
   }, []);
 
   const handleFilterChange = <K extends keyof VentureFilters>(
@@ -85,7 +85,7 @@ export default function VenturesPage() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      handleGetProjects(filters);
+      handleGetVentures(filters);
     }, 300);
 
     return () => clearTimeout(timeout);
@@ -107,7 +107,7 @@ export default function VenturesPage() {
     setNewVentureDiagnostic(initialDiagnosticoForm);
   };
 
-  const handleCreateProject = async () => {
+  const handleCreateVenture = async () => {
     if (newVenture.fecha_fin && newVenture.fecha_inicio && new Date(newVenture.fecha_fin) < new Date(newVenture.fecha_inicio)) {
       toast.error("La fecha de fin no puede ser menor a la fecha de inicio.");
       return;
@@ -118,8 +118,6 @@ export default function VenturesPage() {
       setError(null);
 
       const createdVenture = await registerVenture(newVenture);
-
-      console.log("VENTURE CREADO: ", createdVenture);
 
       await createDiagnostic({
         ...newVentureDiagnostic ,
@@ -343,7 +341,7 @@ export default function VenturesPage() {
               <p>{error}</p>
               <button
                 type="button"
-                onClick={() => handleGetProjects(filters)}
+                onClick={() => handleGetVentures(filters)}
                 className={styles.clearButton}
               >
                 Reintentar
@@ -388,7 +386,7 @@ export default function VenturesPage() {
       <VentureModal
         open={showCreateModal && permissions.canCreateVenture}
         onClose={closeCreateModal}
-        onSubmit={handleCreateProject}
+        onSubmit={handleCreateVenture}
         isSubmitting={isSubmitting}
         newVenture={newVenture}
         setNewVenture={setNewVenture}

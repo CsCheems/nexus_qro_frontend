@@ -1,13 +1,22 @@
+"use client"
 import { useState } from "react";
 import styles from "./consultingRequestDialog.module.css";
+import { ConsultantServiceCard } from "../consultantServiceCard/consultantServiceCard";
+import { ConsultantService } from "@/types/consultant";
+import { getConsultantsByServiceCode } from "@/services/consultantService";
 
 interface ConsultingRequestDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: { type: string; description: string }) => void;
+  onSubmit: (data: { 
+    service_id: number; 
+    consultant_id: number; 
+    description: string 
+  }) => void;
 }
 
 const consultingTypes = [
+  { value: "", label: "Selecciona un servicio"},
   { value: "tech", label: "Asesoría técnica" },
   { value: "business", label: "Estrategia de negocio" },
   { value: "legal", label: "Legal y regulatorio" },
@@ -24,21 +33,54 @@ export function ConsultingRequestDialog({
 
   const [selectedType, setSelectedType] = useState(consultingTypes[0].value);
   const [description, setDescription] = useState("");
+  const [consultants, setConsultants] = useState<ConsultantService[]>([]);
+  const [loadingConsultants, setLoadingConsultants] = useState(false);
+  const [selectedConsultant, setSelectedConsultant] = useState<number | null>(null);
+  const [serviceId, setServiceId] = useState<number | null>(null);
 
   if (!open) return null;
+
+  const handleServiceChange = async (value: string) => {
+    setSelectedType(value);
+    setSelectedConsultant(null);
+    setConsultants([]);
+
+    if(!value) return;
+
+    try{
+      setLoadingConsultants(true);
+
+      const res = await getConsultantsByServiceCode(value);
+
+      setConsultants(res.consultants || []);
+      setServiceId(res.service?.id || null);
+    }catch(error: any){
+      console.error("Error al cargar consultores", error);
+    }finally{
+      setLoadingConsultants(false);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!description.trim()) return;
+    if (!serviceId || !selectedConsultant || !description.trim()) {
+      alert("Completa todos los campos y selecciona un consultor");
+      return;
+    }
 
     onSubmit({
-      type: selectedType,
+      service_id: serviceId,
+      consultant_id: selectedConsultant,
       description: description.trim(),
     });
 
     setDescription("");
-    setSelectedType(consultingTypes[0].value);
+    setSelectedType("");
+    setSelectedConsultant(null);
+    setConsultants([]);
+    setServiceId(null);
+
     onOpenChange(false);
   };
 
@@ -48,7 +90,7 @@ export function ConsultingRequestDialog({
         className={styles.dialog}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* HEADER */}
+
         <div className={styles.header}>
           <h2 className={styles.title}>Nueva solicitud de asesoría</h2>
           <p className={styles.description}>
@@ -56,19 +98,16 @@ export function ConsultingRequestDialog({
           </p>
         </div>
 
-        {/* FORM */}
         <form onSubmit={handleSubmit}>
           <div className={styles.form}>
-            {/* Tipo */}
             <div className={styles.field}>
               <label htmlFor="type" className={styles.label}>
                 Tipo de asesoría
               </label>
-
               <select
                 id="type"
                 value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
+                onChange={(e) => handleServiceChange(e.target.value)}
                 className={styles.select}
               >
                 {consultingTypes.map((type) => (
@@ -79,7 +118,36 @@ export function ConsultingRequestDialog({
               </select>
             </div>
 
-            {/* Descripción */}
+            {selectedType && (
+              <div className={styles.consultantsSection}>
+
+                <h3 className={styles.sectionTitle}>
+                  Consultores disponibles
+                </h3>
+
+                {loadingConsultants ? (
+                  <p className={styles.loading}>Cargando consultores...</p>
+                ) : consultants.length === 0 ? (
+                  <p className={styles.empty}>
+                    No hay consultores disponibles para este servicio
+                  </p>
+                ) : (
+                  <div className={styles.consultantsGrid}>
+                    {consultants.map((consultant) => (
+                      <ConsultantServiceCard
+                        key={consultant.consultant_id}
+                        consultant={consultant}
+                        selected={selectedConsultant === consultant.consultant_id}
+                        onSelect={() =>
+                          setSelectedConsultant(consultant.consultant_id)
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className={styles.field}>
               <label htmlFor="description" className={styles.label}>
                 Descripción
@@ -100,7 +168,6 @@ export function ConsultingRequestDialog({
             </div>
           </div>
 
-          {/* FOOTER */}
           <div className={styles.footer}>
             <button
               type="button"

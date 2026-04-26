@@ -1,5 +1,5 @@
 export type ProjectStatus = "Iniciado" | "En Planeación" | "En Ejecución" | "En Seguimiento" | "Suspendido" | "Cancelado" | "Finalizado";
-export type WorkModel = "remoto" | "presencial" | "hibrido";
+export type WorkModel = "Remoto" | "Presencial" | "Hibrido";
 
 export interface Project {
     id: number;

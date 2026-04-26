@@ -14,6 +14,9 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 1rem;
@@ -71,3 +74,33 @@
   margin-bottom: 0.5rem;
 }
 
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.detailButton {
+  padding: 8px 14px;
+
+  background-color: #2563eb;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detailButton:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.detailButton:active {
+  transform: scale(0.97);
+}

@@ -2,12 +2,13 @@ import styles from "./consultingRequestList.module.css";
 
 import { Plus } from "lucide-react";
 import { ConsultingRequestCard } from "../consultingRequestCard/consultingRequestCard";
+import { ConsultingRequestStatus } from "@/types/ventures";
 
 interface ConsultingRequest {
   id: string;
   type: string;
   description: string;
-  status: "pending" | "scheduled" | "completed";
+  status: ConsultingRequestStatus;
   date: string;
   consultant?: string;
 }

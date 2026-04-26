@@ -35,7 +35,7 @@ import Navbar from "../../components/navbar/navbar";
 import type { VentureDiagnosticResponse, VentureDetailResponse, VentureTask, VentureTaskStatus } from "@/types/ventures";
 
 // Service
-import { getVentureById, getVentureDiagnostic, getRoadmap } from "@/services/ventureService";
+import { getVentureById, getVentureDiagnostic } from "@/services/ventureService";
 
 // Helpers
 import { mapVentureFromApi } from "@/mappers/venture.mapper";
@@ -56,8 +56,6 @@ interface VentureDetalleProps {
 
 export function VentureDetalle({ id }: VentureDetalleProps) {
   
-  
-
   const [venture, setVenture] = useState<VentureDetailResponse | null>(null);
   const [diagnostic, setDiagnostic] = useState<VentureDiagnosticResponse | null>(null);
   const [roadmap, setRoadmap] = useState<RoadmapResponse | null>(null);
@@ -289,7 +287,7 @@ export function VentureDetalle({ id }: VentureDetalleProps) {
                   tasks={mappedData.currentStage.tasks}
                   onTaskClick={handleOpenTask}
               />
-              <ActivityFeed activities={mappedData.activities} />
+              {/* <ActivityFeed activities={mappedData.activities} /> */}
             </div>
 
           </div>
