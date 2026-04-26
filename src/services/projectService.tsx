@@ -1,6 +1,6 @@
 import api from "./api";
 
-import type { CreateProjectPayload, Project, ApiProjectFilters, ProjectDetalleApiResponse } from "@/types/projects";
+import type { CreateProjectPayload, Project, ApiProjectFilters } from "@/types/projects";
 
 
 export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[]> => {
@@ -21,7 +21,7 @@ export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[
     }
 };
 
-export const getProjectById = async (id: string): Promise<ProjectDetalleApiResponse> => {
+export const getProjectById = async (id: string): Promise<Project> => {
     try{
         const { data } = await api.get(`/projects/${id}`);
         return data;

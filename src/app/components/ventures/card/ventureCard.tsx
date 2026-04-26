@@ -95,14 +95,14 @@ export function VentureCard({
             </span>
           </div>
 
-          <div className={styles.metaItem}>
+          {/* <div className={styles.metaItem}>
             <HandCoins size={16} />
             <span>
               {venture.requiere_financiamiento
                 ? "Si requiere financionamiento"
                 : "No requiere finaciamiento"}
             </span>
-          </div>
+          </div> */}
 
           {!isVenturer && (
             <>

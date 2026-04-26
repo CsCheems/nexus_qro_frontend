@@ -17,9 +17,9 @@ export const WORK_MODEL_OPTIONS: {
     value: WorkModel;
     label: string;
     }[] = [
-    { value: "remoto", label: "Remoto" },
-    { value: "presencial", label: "Presencial" },
-    { value: "hibrido", label: "Híbrido" }
+    { value: "Remoto", label: "Remoto" },
+    { value: "Presencial", label: "Presencial" },
+    { value: "Hibrido", label: "Híbrido" }
 ];
 
 export const PROJECT_STATUS_FILTERS = [

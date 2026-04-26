@@ -9,9 +9,10 @@ export const initialProjectForm: CreateProjectPayload = {
     fecha_inicio: "",
     fecha_fin: "",
     estado: "En Planeación",
-    modalidad: "remoto",
+    modalidad: "Remoto",
     requisitos: "",
     beneficios: "",
     contacto_email: "",
-    contacto_telefono: ""
+    contacto_telefono: "", 
+    venture_id: 0
 };

@@ -30,6 +30,7 @@ export default function VenturesPage() {
   const userRole = user?.usuario?.rol as UserRole | undefined;
 
   const [ventures, setVentures] = useState<Venture[]>([]);
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

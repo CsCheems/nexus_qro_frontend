@@ -12,7 +12,7 @@ export const mockProjects: Project[] = [
         fecha_inicio: "2025-01-01",
         fecha_fin: "2025-08-01",
         estado: "Iniciado",
-        modalidad: "hibrido",
+        modalidad: "Hibrido",
         requisitos: "Conocimientos básicos de IoT",
         beneficios: "Experiencia práctica",
         contacto_email: "consultor@test.com",

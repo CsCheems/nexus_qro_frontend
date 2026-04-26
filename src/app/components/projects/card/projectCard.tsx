@@ -57,9 +57,9 @@ export function ProjectCard({
 
   const getWorkModelLabel = (modalidad: WorkModel) => {
     const labels: Record<WorkModel, string> = {
-      remoto: "Remoto",
-      presencial: "Presencial",
-      hibrido: "Híbrido",
+      Remoto: "Remoto",
+      Presencial: "Presencial",
+      Hibrido: "Híbrido",
     };
     return labels[modalidad];
   };
