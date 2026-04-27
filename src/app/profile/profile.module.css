@@ -70,8 +70,12 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 320px 1fr;
   gap: 20px;
+}
+
+.grid > * {
+  min-width: 0;
 }
 
 .leftColumn,
@@ -85,6 +89,14 @@
   border-radius: 12px;
   padding: 20px;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .avatarWrapper {
@@ -108,7 +120,8 @@
 .avatarEdit {
   position: absolute;
   bottom: 0;
-  right: 35%;
+  right: 0;
+  transform: translate(25%, 25%);
   background: white;
   border: 2px solid #2562ea;
   border-radius: 50%;
@@ -116,8 +129,8 @@
   cursor: pointer;
 }
 
-.userName{
-    text-align: center;
+.userName {
+  text-align: center;
 }
 
 .role {
@@ -139,16 +152,10 @@
   color: green;
 }
 
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .editBtn {
-  display: flex;              
-  align-items: center;        
-  justify-content: center;    
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 6px;
   background: linear-gradient(90deg, #2562ea, #4237c7);
   color: white;
@@ -188,10 +195,10 @@
   gap: 12px;
 }
 
-.field{
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .field label {
@@ -206,6 +213,15 @@
   padding: 10px;
   background: #f9fafb;
   border-radius: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.field div span,
+.field div p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sectionDivider {
@@ -227,107 +243,104 @@
   border: 1px solid #ccc;
 }
 
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2562ea;
+  box-shadow: 0 0 0 2px rgba(37, 98, 234, 0.2);
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 10px;
 }
 
-.input{
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
+.actions button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background: #f3f4f6;
+  border: 1px solid black;
+}
+
+.actions button:last-child {
+  background: linear-gradient(90deg, #2562ea, #4237c7);
+  color: white;
+  border: none;
+}
+
+.servicesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .headerContent {
+    padding: 12px 16px;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .avatar {
+    width: 90px;
+    height: 90px;
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .pageHeader h1 {
+    font-size: 22px;
+  }
+
+  .pageHeader p {
     font-size: 14px;
+  }
 }
 
-.input:focus{
-    outline: none;
-    border-color: #2562ea;
-    box-shadow: 0 0 0 2px rgba(37, 98, 234, 0.2);
-}
+@media (max-width: 768px) {
+  .main {
+    padding: 20px;
+  }
 
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-}
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
 
-.actions button{
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
+  .row {
+    grid-template-columns: 1fr;
+  }
 
-.actions button:first-child{
-    background: #f3f4f6;
-    border: 1px solid black;
-}
+  .actions {
+    flex-direction: column;
+  }
 
-.actions button:last-child{
-    background: linear-gradient(90deg, #2562ea, #4237c7);
-    color: white;
-    border: none;
-}
+  .actions button {
+    width: 100%;
+  }
 
-.leftColumn {
-  order: 1;
-}
-
-.rightColumn {
-  order: 2;
-}
-
-@media (max-width: 768px){
-
-    .infoGrid {
-        grid-template-columns: 1fr;
-    }
-
-    .grid{
-        grid-template-columns: 1fr;
-    }
-
-    .headerContent{
-        padding: 12px 16px;
-    }
-
-    .brand span{
-        display: none;
-    }
-
-    .main{
-        padding: 20px 26px;
-    }
-
-    .avatar{
-        width: 90px;
-        height: 90px;
-        font-size: 28px;
-    }
-
-    .actions{
-        flex-direction: column;
-    }
-
-    .actions button{
-        width: 100%;
-    }
-
-    .infoGrid{
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .card{
-        padding: 16px;
-    }
-
-    .pageHeader h1{
-        font-size: 22px;
-    }
-
-    .pageHeader p{
-        font-size: 14px;
-    }
+  .backLink {
+    font-size: 12px;
+  }
 }
