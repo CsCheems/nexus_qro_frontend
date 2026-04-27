@@ -12,7 +12,6 @@ import { register } from "@/services/usersService";
 import { useToast } from "../components/toast/toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth.context";
-import { getMe } from "@/services/authService";
 
 export default function Auth() {
   const router = useRouter();
@@ -33,7 +32,7 @@ export default function Auth() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
 
-  const { setUser } = useAuth();
+  const { refreshUser } = useAuth();
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,9 +41,8 @@ export default function Auth() {
       const response = await login(userData);
       if(response.status === 200){
         toast.success("Inicio de sesion exitoso");
-        const me = await getMe();
-        console.log("Me: ", me.usuario);
-        setUser(me.usuario);
+        await new Promise((res) => setTimeout(res, 100));
+        await refreshUser();
         router.replace("/");
       }
     }catch(error: any){

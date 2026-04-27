@@ -1,12 +1,17 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getMe } from "@/services/authService";
+import { useRouter } from "next/navigation";
+import { getMe, logout } from "@/services/authService";
+import type { User } from "@/types/profiles";
+
 
 interface AuthContextType {
-  user: any;
+  user: User;
   loading: boolean;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+  refreshUser: () => Promise<void>;
+  logout: () => Promise<void>;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -15,23 +20,43 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const data = await getMe();
-        setUser(data.usuario ?? null);
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const router = useRouter();
 
-    fetchUser();
+  const refreshUser = async () => {
+    try{
+      setLoading(true);
+      const data = await getMe();
+      console.log("GET ME:", data);
+      setUser(data.usuario?.usuario ?? null);
+    }catch(error: any){
+      setUser(null);
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  const logout = async () => {
+    try {
+      await logout();
+    } catch (error: any) {
+      setUser(null);
+      console.log(error);
+    }finally{
+      setUser(null);
+      router.push("/login");
+    }
+  }
+
+  useEffect(() => {
+    refreshUser();
   }, []);
 
+  useEffect(() => {
+    console.log("AuthProvider mounted");
+  }, []);
+ 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser }}>
+    <AuthContext.Provider value={{ user, loading, refreshUser, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );

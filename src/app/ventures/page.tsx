@@ -27,7 +27,7 @@ export default function VenturesPage() {
   
   const { user, loading } = useAuth();
   
-  const userRole = user?.usuario?.rol as UserRole | undefined;
+  const userRole = user?.rol as UserRole | undefined;
 
   const [ventures, setVentures] = useState<Venture[]>([]);
   

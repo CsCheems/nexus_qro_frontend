@@ -79,7 +79,9 @@ export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
 
     const { user, loading, setUser } = useAuth();
 
-    const role = user?.usuario?.rol as UserRole | undefined;
+    console.log(user);
+
+    const role = user?.rol as UserRole | undefined;
     const menuItems = role ? menuByRole[role] : [];
 
     useEffect(() => {
@@ -150,7 +152,7 @@ export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
                     {user ? (
                         <div className={style.userMenu} ref={menuRef}>
                             <button className={style.userButton} onClick={() => setIsDropdownOpen(prev => !prev)}>
-                                {user.usuario.nombres}
+                                {user.nombres}
                             </button>
 
                             {isDropdownOpen && (
@@ -197,7 +199,7 @@ export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
                         <>
                         <div className={style.divider}></div>
                         <div className={style.mobileUserSection}>
-                            <span className={style.mobileUsername}>{user.usuario.nombres}</span>
+                            <span className={style.mobileUsername}>{user.nombres}</span>
                             {menuItems.map((item) => (
                                 <Link key={item.href} href={item.href}>
                                     {item.label}

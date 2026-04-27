@@ -22,7 +22,7 @@ export default function ProjectsPage() {
   
   const { user, loading } = useAuth();
   
-  const userRole = user?.usuario?.rol as UserRole | undefined;
+  const userRole = user?.rol as UserRole | undefined;
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);

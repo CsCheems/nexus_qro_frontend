@@ -204,7 +204,7 @@ export function VentureDetalle({ id }: VentureDetalleProps) {
 
   
     
-  const userRole = user?.usuario?.rol as UserRole | undefined;
+  const userRole = user?.rol as UserRole | undefined;
 
    if (loading) {
     return <div>Cargando usuario...</div>;
