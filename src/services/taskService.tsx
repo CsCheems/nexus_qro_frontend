@@ -2,11 +2,7 @@ import api from "@/services/api";
 
 export const getEvidencesByTask = async (ventureId: string, taskKey: string) => {
     try{
-        const { data } = await api.get(`/tasks/evidences/${ventureId}/${taskKey}`,
-            {
-                withCredentials: true,
-            }
-        );
+        const { data } = await api.get(`/tasks/evidences/${ventureId}/${taskKey}`);
         return data;
     }catch(error: any){
         if(error.response){
@@ -30,9 +26,6 @@ export const createEvidence = async (payload: {
         const { data } = await api.post(
             "/tasks/evidences",
             payload,
-            {
-                withCredentials: true,
-            }
         );
         return data;
     }catch(error: any){
@@ -90,9 +83,6 @@ export const completeTask = async (ventureId: string, taskKey: string) => {
         const { data } = await api.patch(`/tasks/${taskKey}/complete`, 
             {
                 ventureId,
-            },
-            {
-                withCredentials: true,
             }
         );
         return data;

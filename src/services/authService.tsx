@@ -8,9 +8,7 @@ interface LoginUserData{
 
 export const login = async(userData: LoginUserData) =>{
     try{
-        const response = await api.post("/auth/login", userData, {
-            withCredentials: true
-        });
+        const response = await api.post("/auth/login", userData);
         console.log(response.data);
         return response;
     }catch(error: any){
@@ -26,9 +24,7 @@ export const login = async(userData: LoginUserData) =>{
 
 export const getMe = async () => {
     try{
-        const response = await api.get("/auth/me", {
-            withCredentials: true,
-        });
+        const response = await api.get("/auth/me");
         return response.data;
     }catch(error: any){
         if (error.response) {
@@ -43,11 +39,7 @@ export const getMe = async () => {
 
 export const logout = async () => {
     try{
-        await api.post("/auth/logout", {},
-            {
-                withCredentials: true,
-            }
-        );
+        await api.post("/auth/logout");
     }catch(error: any){
         console.error("Error al cerrar sesión");
     }

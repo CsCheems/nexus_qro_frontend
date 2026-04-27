@@ -7,7 +7,6 @@ export const getVentures = async (filters?: ApiVentureFilters): Promise<Venture[
     try{
         const response = await api.get("/ventures", {
             params: filters,
-            withCredentials: true,
         });
         return response.data;
     }catch(error: any){
@@ -27,9 +26,6 @@ export const registerVenture = async (
             const response = await api.post(
                 "/ventures/register",
                 ventureData,
-                {
-                    withCredentials: true,
-                }
             );
             return response.data;
         }catch(error: any){

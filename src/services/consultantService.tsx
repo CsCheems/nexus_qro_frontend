@@ -3,9 +3,7 @@ import { ConsultantByServiceResponse } from "@/types/consultant";
 
 export async function getServices() {
     try{
-            const res = await api.get("/services", {
-                withCredentials: true
-            });
+            const res = await api.get("/services");
             return res.data;
     }catch(error: any){
         if (error.response) {
@@ -20,9 +18,7 @@ export async function getServices() {
 
 export const getConsultantsByServiceCode = async (code: string): Promise<ConsultantByServiceResponse> =>{
     try{
-            const res = await api.get(`/services/consultantByServiceCode/${code}`, {
-                withCredentials: true
-            });
+            const res = await api.get(`/services/consultantByServiceCode/${code}`);
             return res.data;
     }catch(error: any){
         if (error.response) {

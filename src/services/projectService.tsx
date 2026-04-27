@@ -6,8 +6,7 @@ import type { CreateProjectPayload, Project, ApiProjectFilters } from "@/types/p
 export const getProjects = async (filters?: ApiProjectFilters): Promise<Project[]> => {
     try {
         const response = await api.get("/projects", {
-            params: filters,
-            withCredentials: true,
+            params: filters
         });
         return response.data;
     } catch (error: any) {
@@ -45,10 +44,7 @@ export const createProject = async (
     try {
         const response = await api.post(
             "/projects/register",
-            projectData,
-            {
-                withCredentials: true,
-            }
+            projectData
         );
         return response.data;
     }catch(error: any){
@@ -71,10 +67,7 @@ export const updateProject = async (
     try {
         const response = await api.put(
             `/projects/update/${id}`,
-            projectData,
-            {
-                withCredentials: true,
-            }
+            projectData
         );
         return response.data;
     } catch (error: any) {
