@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     try{
       setLoading(true);
       const data = await getMe();
-      console.log("GET ME:", data);
       setUser(data.usuario?.usuario ?? null);
     }catch(error: any){
       setUser(null);
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
       await logout();
     } catch (error: any) {
       setUser(null);
-      console.log(error);
+      console.error(error);
     }finally{
       setUser(null);
       router.push("/login");
@@ -51,9 +50,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     refreshUser();
   }, []);
 
-  useEffect(() => {
-    console.log("AuthProvider mounted");
-  }, []);
  
   return (
     <AuthContext.Provider value={{ user, loading, refreshUser, logout, setUser }}>

@@ -79,8 +79,6 @@ export default function Navbar({ variant = "home"}:{variant?: NavbarVariant}) {
 
     const { user, loading, setUser } = useAuth();
 
-    console.log(user);
-
     const role = user?.rol as UserRole | undefined;
     const menuItems = role ? menuByRole[role] : [];
 

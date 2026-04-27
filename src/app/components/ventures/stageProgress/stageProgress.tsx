@@ -47,7 +47,6 @@ export function StageProgress({
   tasks,
   onTaskClick,
 }: StageProgressProps) {
-  console.log(tasks);
   const params = useParams();
   const ventureId = params.id as string;
 

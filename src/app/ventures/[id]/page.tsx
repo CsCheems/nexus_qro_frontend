@@ -8,7 +8,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     return (
         <>
             <RouteProtection>
-                <Navbar variant="internal" />
                 <VentureDetalle id={id} />
             </RouteProtection>
             

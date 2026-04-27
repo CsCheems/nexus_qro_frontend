@@ -92,8 +92,7 @@ export default function Profile() {
 
     const handlePasswordSave = (e: React.FormEvent) => {
         e.preventDefault();
-        // Implement password save logic here
-        console.log("Saving password changes:", passwordFields);
+        //Pa luego mejor
         setIsEditingPassword(false);
     };
 
